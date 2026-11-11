@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Funciones y Modelado de Funciones · Matemáticas · UV</title>
+<meta name="description" content="Clase interactiva de Funciones y Modelado de Funciones para Ingeniería en Agronomía: roya del cafeto y crecimiento forestal, con ejercicios autocorregibles y reporte PDF para Eminus 4.">
+<style>
+:root{color-scheme:dark;--bg:#09121f;--panel:#122135;--card:#162940;--line:#2b415d;--text:#edf4ff;--muted:#b2c3d9;--mint:#77e3bc;--blue:#80beff;--gold:#f1c17d;--red:#ff9a9a;--coffee:#d9925b;--pine:#5fc48a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.65 'Segoe UI',Arial,sans-serif}
+a{color:var(--blue);text-underline-offset:3px}
+button,.button{font:inherit;font-size:14px;font-weight:650;border:1px solid var(--mint);background:var(--mint);color:#08251d;padding:9px 15px;border-radius:8px;cursor:pointer;text-decoration:none;display:inline-block}
+button:hover{filter:brightness(1.1)}
+button.secondary{background:transparent;color:var(--text);border-color:var(--line)}
+button.danger{background:transparent;color:var(--red);border-color:#6b3340}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+header{height:60px;position:fixed;inset:0 0 auto;z-index:20;display:flex;align-items:center;justify-content:space-between;background:#0d1929;border-bottom:1px solid var(--line);padding:8px 20px;gap:10px}
+header strong{font-size:14px;letter-spacing:.06em}
+header .right{display:flex;gap:14px;align-items:center;font-size:13px;color:var(--muted)}
+#scoreBadge{background:#173a35;border:1px solid #2f6a5c;color:var(--mint);padding:4px 10px;border-radius:20px;font-weight:700}
+#menuBtn{display:none;padding:6px 10px}
+nav{position:fixed;left:0;top:60px;bottom:0;width:260px;padding:16px 10px 70px;overflow:auto;background:#0c1828;border-right:1px solid var(--line);z-index:15}
+nav button{width:100%;text-align:left;color:var(--muted);background:transparent;border:0;font-weight:400;padding:7px 10px;margin:1px 0;font-size:13.5px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+nav button.active{background:#1e3a47;color:var(--mint);font-weight:700}
+nav .min{font-size:11px;color:#7f93ad;flex:none}
+nav .dot{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--line);flex:none}
+nav .dot.done{background:var(--mint);border-color:var(--mint)}
+nav .dot.half{background:linear-gradient(90deg,var(--mint) 50%,transparent 50%);border-color:var(--mint)}
+nav .label{flex:1}
+#progress{height:6px;background:var(--line);border-radius:4px;margin:6px 10px 14px;overflow:hidden}
+#progress i{display:block;height:100%;background:var(--mint);width:0;transition:width .4s}
+main{margin:60px 0 0 260px;padding:34px clamp(18px,4vw,64px) 110px;max-width:1250px}
+.lesson{display:none}
+.lesson.active{display:block}
+h1{font-size:clamp(28px,3vw,42px);line-height:1.18;letter-spacing:-.02em;margin:8px 0 16px}
+h2{font-size:25px;line-height:1.3;margin:30px 0 10px}
+h3{font-size:19px;line-height:1.35;margin:18px 0 6px}
+p{margin:10px 0 16px}
+.lead{font-size:19px;color:var(--muted);max-width:900px}
+.eyebrow{color:var(--mint);letter-spacing:.13em;font-size:12px;font-weight:700;text-transform:uppercase}
+.grid2,.grid3{display:grid;gap:18px;margin:20px 0}
+.grid2{grid-template-columns:1fr 1fr}
+.grid3{grid-template-columns:repeat(3,1fr)}
+.grid2>*,.grid3>*{min-width:0}
+article,.card{padding:18px 22px;background:var(--panel);border:1px solid var(--line);border-radius:13px;margin:14px 0}
+.grid2 article,.grid3 article{margin:0}
+.hero{padding:26px;background:linear-gradient(130deg,#183e40,#14233b);border-radius:18px;margin:20px 0}
+.hero.coffee{background:linear-gradient(130deg,#3e2a18,#14233b)}
+.hero.pine{background:linear-gradient(130deg,#173e27,#14233b)}
+.pill{font-size:11px;letter-spacing:.06em;border:1px solid var(--line);padding:4px 9px;border-radius:20px;display:inline-block;color:var(--muted);margin:2px}
+.callout{background:#143638;border-left:4px solid var(--mint);padding:14px 18px;border-radius:8px;margin:16px 0}
+.callout.warn{background:#3a2f17;border-left-color:var(--gold)}
+.callout.info{background:#15294a;border-left-color:var(--blue)}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0}
+.flow span{background:var(--card);border:1px solid var(--line);padding:6px 12px;border-radius:20px;font-size:14px}
+.flow i{color:var(--mint);font-style:normal}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:15px}
+th,td{border-bottom:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:650;font-size:13px;text-transform:uppercase;letter-spacing:.04em}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+td.hl{background:#3a2f17;color:var(--gold);font-weight:700;text-align:center}
+.formula{font-family:Cambria,'Times New Roman',serif;font-size:22px;background:#0e1c2e;border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin:12px 0;text-align:center;overflow-x:auto}
+.formula small{display:block;font-family:'Segoe UI',Arial,sans-serif;font-size:13px;color:var(--muted);margin-top:4px}
+.m{font-family:Cambria,'Times New Roman',serif;font-size:1.08em;white-space:nowrap}
+details{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 16px;margin:12px 0}
+details summary{cursor:pointer;font-weight:650}
+/* Ejercicios */
+.ex{border:1px solid #2f6a5c;background:#0f2430;border-radius:14px;padding:16px 20px;margin:18px 0;position:relative}
+.ex .tag{color:var(--mint);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;display:flex;justify-content:space-between;gap:10px}
+.ex .tag .pts{color:var(--muted);letter-spacing:.04em}
+.ex .enun{margin:6px 0 10px}
+.ex .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.ex input[type=text],.ex input[type=number]{font:inherit;font-size:16px;background:#0b1626;border:1px solid var(--line);color:var(--text);padding:7px 10px;border-radius:8px;width:170px}
+.ex textarea{font:inherit;font-size:15px;background:#0b1626;border:1px solid var(--line);color:var(--text);padding:10px;border-radius:8px;width:100%;min-height:110px}
+.ex select{font:inherit;font-size:14px;background:#0b1626;border:1px solid var(--line);color:var(--text);padding:6px 8px;border-radius:8px}
+.ex .opts label{display:block;padding:7px 10px;border:1px solid var(--line);border-radius:8px;margin:6px 0;cursor:pointer;background:#0b1a2b}
+.ex .opts label:hover{border-color:var(--mint)}
+.ex .opts input{margin-right:8px}
+.ex .items{display:grid;grid-template-columns:1fr auto;gap:8px 14px;align-items:center;margin:8px 0}
+.ex .fb{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:15px;display:none}
+.ex .fb.ok{display:block;background:#123a2c;border-left:4px solid var(--mint)}
+.ex .fb.bad{display:block;background:#3a1d24;border-left:4px solid var(--red)}
+.ex .fb.sol{display:block;background:#3a2f17;border-left:4px solid var(--gold)}
+.ex .fb.note{display:block;background:#15294a;border-left:4px solid var(--blue)}
+.ex.done{border-color:var(--mint)}
+.ex.done::after{content:'✓';position:absolute;right:-10px;top:-10px;background:var(--mint);color:#08251d;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:800}
+.ex.fail::after{content:'!';position:absolute;right:-10px;top:-10px;background:var(--gold);color:#3a2f17;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:800}
+.unit{color:var(--muted);font-size:14px}
+.counter{font-size:12px;color:var(--muted)}
+/* Gráficas y controles */
+.plotbox{background:#0b1626;border:1px solid var(--line);border-radius:12px;padding:12px;margin:14px 0}
+canvas.plot{width:100%;height:360px;display:block}
+.ctrls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px 22px;margin:10px 0}
+.ctrls label{font-size:14px;color:var(--muted);display:block}
+.ctrls input[type=range]{width:100%;accent-color:var(--mint)}
+.ctrls b{color:var(--text);font-variant-numeric:tabular-nums}
+.readout{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0}
+.readout span{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:14px}
+.readout b{color:var(--gold)}
+.famtabs{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.famtabs button{background:transparent;color:var(--muted);border-color:var(--line);font-weight:500}
+.famtabs button.on{background:#1e3a47;color:var(--mint);border-color:var(--mint)}
+.pager{display:flex;justify-content:space-between;margin-top:40px;gap:10px}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.form label{font-size:13px;color:var(--muted);display:block;margin-bottom:4px}
+.form input{font:inherit;width:100%;background:#0b1626;border:1px solid var(--line);color:var(--text);padding:9px 12px;border-radius:8px}
+.form input[readonly]{color:var(--muted)}
+.refs li{margin:8px 0}
+.refs .why{display:block;color:var(--muted);font-size:14px}
+.check li{list-style:none;margin:4px 0}
+.check li::before{content:'○ ';color:var(--muted)}
+.check li.ok::before{content:'● ';color:var(--mint)}
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#1e3a47;border:1px solid var(--mint);color:var(--text);padding:10px 18px;border-radius:10px;z-index:50;display:none;max-width:90vw}
+.timechip{display:inline-block;font-size:12px;color:var(--gold);border:1px solid #6a5530;border-radius:20px;padding:2px 10px;margin-left:8px;vertical-align:middle}
+@media (max-width:900px){
+  nav{transform:translateX(-100%);transition:transform .25s}
+  nav.open{transform:none}
+  main{margin-left:0}
+  #menuBtn{display:inline-block}
+  .grid2,.grid3,.form{grid-template-columns:1fr}
+  header .right .hide-s{display:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <div style="display:flex;align-items:center;gap:10px"><button id="menuBtn" class="secondary" aria-label="Menú">☰</button><strong>FUNCIONES Y MODELADO · MATEMÁTICAS UV</strong></div>
+  <div class="right"><span class="hide-s" id="whoChip">Sin registrar</span><span id="scoreBadge">0 / 0 pts</span></div>
+</header>
+<nav id="nav"><div id="progress"><i></i></div><div id="navList"></div></nav>
+<main id="main">
+
+<!-- ===================== 0. INICIO ===================== -->
+<section class="lesson" data-title="Inicio y registro" data-min="3">
+  <div class="eyebrow">Universidad Veracruzana · Ingeniería en Agronomía · EE Matemáticas</div>
+  <h1>Funciones y Modelado de Funciones</h1>
+  <p class="lead">Clase interactiva de 60 minutos. Aprenderás qué es una función, conocerás las familias de funciones que más se usan en el campo y las aplicarás a dos problemas reales: la epidemia de <b>roya del cafeto</b> y el <b>crecimiento de una plantación de pino</b> en Veracruz.</p>
+  <div class="hero">
+    <div class="grid3" style="margin:0">
+      <div><div class="eyebrow">Docente</div><div>Dr. Gustavo Ortiz Hernández</div></div>
+      <div><div class="eyebrow">Experiencia educativa</div><div>Matemáticas</div></div>
+      <div><div class="eyebrow">Tema</div><div>Funciones y Modelado de Funciones</div></div>
+    </div>
+  </div>
+  <h2>1. Regístrate</h2>
+  <p>Tu nombre y matrícula aparecerán en la portada y en cada página del reporte PDF que subirás a Eminus 4. Tu avance se guarda en este navegador.</p>
+  <div class="form">
+    <div><label for="inNombre">Nombre completo (apellidos y nombre)</label><input id="inNombre" autocomplete="name" placeholder="p. ej. Hernández López María Fernanda"></div>
+    <div><label for="inMatricula">Matrícula</label><input id="inMatricula" placeholder="p. ej. zS25012345"></div>
+    <div><label>Docente</label><input value="Dr. Gustavo Ortiz Hernández" readonly></div>
+    <div><label>Experiencia educativa</label><input value="Matemáticas" readonly></div>
+  </div>
+  <div class="row" style="display:flex;gap:10px;align-items:center"><button id="btnRegistro">Guardar y comenzar →</button><span id="regMsg" class="unit"></span></div>
+
+  <h2>2. Lo que lograrás</h2>
+  <div class="grid2">
+    <article><h3>Objetivos</h3><ul>
+      <li>Reconocer una función y describir su dominio y rango en un contexto agronómico.</li>
+      <li>Distinguir las familias lineal, cuadrática, potencia, exponencial, logística y de Chapman-Richards, e interpretar sus parámetros.</li>
+      <li>Aplicar el ciclo de modelado: de datos de campo a una función que sirve para decidir.</li>
+      <li>Estimar tasas, predecir y comparar estrategias de manejo con un modelo.</li>
+    </ul></article>
+    <article><h3>Ruta de la clase (≈ 60 min)</h3><table>
+      <tr><td>1. ¿Qué es una función?</td><td class="num">8 min</td></tr>
+      <tr><td>2. Familias de funciones</td><td class="num">10 min</td></tr>
+      <tr><td>3. El ciclo de modelado</td><td class="num">5 min</td></tr>
+      <tr><td>4. Caso 1: roya del cafeto</td><td class="num">15 min</td></tr>
+      <tr><td>5. Caso 2: plantación de pino</td><td class="num">13 min</td></tr>
+      <tr><td>6. Cierre y autoevaluación</td><td class="num">4 min</td></tr>
+      <tr><td>7–8. Referencias y reporte PDF</td><td class="num">2 min</td></tr>
+    </table></article>
+  </div>
+  <div class="callout info"><b>Cómo funciona.</b> Cada ejercicio se corrige al pulsar <span class="m">Comprobar</span>. Tienes <b>2 intentos</b>: si aciertas al primero obtienes todos los puntos; al segundo, la mitad; después verás la solución explicada. Las preguntas abiertas las califica el docente. Usa punto o coma decimal. Ten a mano una calculadora (o la de tu celular) con <span class="m">ln</span> y <span class="m">e<sup>x</sup></span>.</div>
+</section>
+
+<!-- ===================== 1. FUNCIONES ===================== -->
+<section class="lesson" data-title="1. ¿Qué es una función?" data-min="8">
+  <div class="eyebrow">Sección 1 <span class="timechip">≈ 8 min</span></div>
+  <h1>¿Qué es una función?</h1>
+  <p class="lead">Una <b>función</b> es una regla que asigna a cada valor de entrada <b>exactamente un</b> valor de salida.</p>
+  <div class="formula">y = f(x)<small>x: variable independiente (entrada) · y: variable dependiente (salida) · f: la regla</small></div>
+  <div class="grid2">
+    <article><h3>Dominio y rango</h3>
+      <p><b>Dominio:</b> todos los valores de entrada permitidos. <b>Rango:</b> los valores de salida que se obtienen.</p>
+      <p>En agronomía el dominio casi siempre está limitado por el contexto: no hay edades negativas, la dosis de fertilizante va de 0 a un máximo razonable y un porcentaje de incidencia vive entre 0 y 100 %.</p>
+    </article>
+    <article><h3>Cuatro formas de representar una función</h3>
+      <ul>
+        <li><b>Verbal:</b> «la plántula crece 1.5 cm por semana».</li>
+        <li><b>Tabla:</b> mediciones semanales en el vivero.</li>
+        <li><b>Gráfica:</b> puntos y curva en un plano.</li>
+        <li><b>Fórmula:</b> <span class="m">h(t) = 4 + 1.5t</span></li>
+      </ul>
+    </article>
+  </div>
+  <div class="callout"><b>Ejemplo guiado.</b> En un vivero forestal se mide una plántula de cedro rojo que al trasplantarse medía 4 cm y crece, en promedio, 1.5 cm por semana. Su altura (cm) en función del tiempo <span class="m">t</span> (semanas) es <span class="m">h(t) = 4 + 1.5t</span>. Entonces <span class="m">h(2) = 4 + 1.5·2 = 7 cm</span>. <i>Leer</i> <span class="m">h(2)</span> como «altura a las 2 semanas», no como multiplicación.</div>
+  <div class="callout warn"><b>Prueba de la recta vertical.</b> Una gráfica representa una función si ninguna recta vertical la corta en más de un punto: a cada <span class="m">x</span> le corresponde un solo <span class="m">y</span>.</div>
+  <div class="ex" data-id="f1"></div>
+  <div class="ex" data-id="f2"></div>
+  <div class="ex" data-id="f3"></div>
+  <div class="ex" data-id="f4"></div>
+  <div class="ex" data-id="f5"></div>
+  <details><summary>Para profundizar</summary><p>LibreTexts Español, <a href="https://espanol.libretexts.org/Bookshelves/Matematicas/Algebra/Algebra_Intermedia_(OpenStax)/03%3A_Gr%C3%A1ficas_y_Funciones/3.06%3A_Relaciones_y_Funciones" target="_blank" rel="noopener">Álgebra Intermedia (OpenStax) · 3.6 Relaciones y funciones</a>, con ejercicios resueltos de dominio, rango y notación de funciones. También Stewart, Redlin y Watson, <i>Precálculo</i>, cap. 2.</p></details>
+</section>
+
+<!-- ===================== 2. FAMILIAS ===================== -->
+<section class="lesson" data-title="2. Familias de funciones" data-min="10">
+  <div class="eyebrow">Sección 2 <span class="timechip">≈ 10 min</span></div>
+  <h1>Familias de funciones para el campo</h1>
+  <p class="lead">Modelar es, en gran parte, <b>elegir la familia correcta</b> según la forma que tienen los datos y lo que sabemos del fenómeno, y luego <b>ajustar sus parámetros</b>.</p>
+  <table>
+    <tr><th>Familia</th><th>Fórmula</th><th>Forma / idea clave</th><th>Ejemplo agropecuario</th></tr>
+    <tr><td>Lineal</td><td class="m">y = mx + b</td><td>Cambio constante: suma lo mismo en cada paso (pendiente m)</td><td>Costo del fertilizante por kg; crecimiento inicial de una plántula</td></tr>
+    <tr><td>Cuadrática</td><td class="m">y = ax² + bx + c</td><td>Parábola con un máximo o mínimo</td><td>Rendimiento vs. dosis de nitrógeno (exceso deprime)</td></tr>
+    <tr><td>Potencia</td><td class="m">y = a·x<sup>b</sup></td><td>Alometría: crece en proporción a una potencia</td><td>Biomasa o volumen de un árbol según su diámetro</td></tr>
+    <tr><td>Exponencial</td><td class="m">y = y<sub>0</sub>·e<sup>rt</sup></td><td>Multiplica por el mismo factor en cada paso; tasa relativa r constante</td><td>Plaga o enfermedad en su fase inicial, sin límites</td></tr>
+    <tr><td>Logística</td><td class="m">y = K / (1 + B·e<sup>−rt</sup>)</td><td>Curva en «S» que se satura en K</td><td>Incidencia de roya; cobertura del dosel; población con capacidad de carga</td></tr>
+    <tr><td>Chapman-Richards</td><td class="m">y = A(1 − e<sup>−kt</sup>)<sup>c</sup></td><td>Crecimiento sigmoide con asíntota A</td><td>Altura o volumen de un rodal vs. edad</td></tr>
+  </table>
+  <h2>Explorador de funciones</h2>
+  <p>Elige una familia y mueve los deslizadores. Observa qué controla cada parámetro: ¿desplaza, inclina, cambia la curvatura o fija un límite?</p>
+  <div class="plotbox">
+    <div class="famtabs" id="famTabs"></div>
+    <div id="famInfo" class="unit"></div>
+    <canvas class="plot" id="cvExplorer"></canvas>
+    <div class="ctrls" id="famCtrls"></div>
+  </div>
+  <div class="callout"><b>Lineal vs. exponencial en una tabla.</b> Si las <b>diferencias</b> consecutivas (y<sub>i+1</sub> − y<sub>i</sub>) son constantes, la relación es lineal. Si los <b>cocientes</b> (y<sub>i+1</sub> / y<sub>i</sub>) son constantes, es exponencial; el cociente es el factor de crecimiento y <span class="m">r = ln(factor)</span>.</div>
+  <div class="ex" data-id="f6"></div>
+  <table style="max-width:560px">
+    <tr><th>t (semanas)</th><th class="num">0</th><th class="num">1</th><th class="num">2</th><th class="num">3</th></tr>
+    <tr><td>Tabla A: altura de maíz (cm)</td><td class="num">50</td><td class="num">65</td><td class="num">80</td><td class="num">95</td></tr>
+    <tr><td>Tabla B: pulgones por planta</td><td class="num">50</td><td class="num">75</td><td class="num">112.5</td><td class="num">168.75</td></tr>
+  </table>
+  <div class="ex" data-id="f7"></div>
+  <div class="ex" data-id="f8"></div>
+</section>
+
+<!-- ===================== 3. MODELADO ===================== -->
+<section class="lesson" data-title="3. El ciclo de modelado" data-min="5">
+  <div class="eyebrow">Sección 3 <span class="timechip">≈ 5 min</span></div>
+  <h1>El ciclo de modelado</h1>
+  <p class="lead">Un modelo matemático es una <b>simplificación útil</b> de la realidad. No es «verdadero» o «falso»: es más o menos útil para un propósito.</p>
+  <div class="flow"><span>Problema real</span><i>→</i><span>Supuestos y variables</span><i>→</i><span>Elegir familia</span><i>→</i><span>Estimar parámetros</span><i>→</i><span>Validar</span><i>→</i><span>Interpretar y decidir</span><i>↺</i></div>
+  <div class="grid2">
+    <article><h3>Buenas prácticas</h3><ul>
+      <li>Define unidades: meses, %, m, m³/ha.</li>
+      <li>Escribe los supuestos («sin aplicación de fungicida», «mismo sitio y manejo»).</li>
+      <li>Grafica los datos <b>antes</b> de elegir la familia.</li>
+      <li>Revisa que la predicción tenga sentido biológico (¿más de 100 %?, ¿alturas negativas?).</li>
+    </ul></article>
+    <article><h3>Cuidado al extrapolar</h3><p>Un modelo ajustado con datos de 0 a 8 meses o de 5 a 40 años es confiable dentro de ese rango. Fuera de él, la predicción puede ser absurda, como verás en el caso de la roya.</p></article>
+  </div>
+  <div class="ex" data-id="f9"></div>
+  <div class="ex" data-id="f10"></div>
+</section>
+
+<!-- ===================== 4. ROYA ===================== -->
+<section class="lesson" data-title="4. Caso 1: roya del cafeto" data-min="15">
+  <div class="eyebrow">Caso de estudio 1 · Fitosanidad <span class="timechip">≈ 15 min</span></div>
+  <h1>La roya del cafeto en una finca de Coatepec, Veracruz</h1>
+  <div class="hero coffee">
+    <p style="margin-top:0">La roya del cafeto es causada por el hongo <i>Hemileia vastatrix</i>, que produce pústulas anaranjadas en el envés de las hojas y provoca defoliación. Entre 2012 y 2013 una epidemia de intensidad nunca vista afectó a Centroamérica y México, con fuertes pérdidas de producción e ingresos de pequeños productores (Avelino et al., 2015).</p>
+    <p style="margin-bottom:0">Un técnico muestrea mensualmente un lote de café arábica variedad susceptible (sin control químico) y registra la <b>incidencia</b>: porcentaje de hojas con al menos una lesión. El productor quiere saber <b>cuándo</b> se alcanzará el umbral de acción del 10 % y <b>qué estrategia</b> le da más tiempo. <span class="pill">datos ilustrativos con fines didácticos</span></p>
+  </div>
+  <table id="tabRoya"></table>
+  <div class="plotbox">
+    <canvas class="plot" id="cvRoya"></canvas>
+    <div class="ctrls">
+      <label>Prueba un valor de r para la curva logística (y<sub>0</sub> = 2 %, K = 100 %): <b id="lblRr">0.40</b> /mes<input type="range" id="slRr" min="0.2" max="1.0" step="0.01" value="0.40"></label>
+      <div class="readout"><span>Suma de errores² (SSE): <b id="sseRoya">–</b></span><span class="unit">Busca el r que haga mínimo el SSE.</span></div>
+    </div>
+  </div>
+
+  <h2>Parte A · ¿Sirve el modelo exponencial?</h2>
+  <p>Al inicio de una epidemia policíclica, cada lesión produce esporas que generan nuevas lesiones: la enfermedad crece en proporción a sí misma, <span class="m">y = y<sub>0</sub>e<sup>rt</sup></span>. Van der Plank llamó a <span class="m">r</span> la <b>tasa aparente de infección</b>. Con dos observaciones:</p>
+  <div class="formula">r = ln(y<sub>2</sub> / y<sub>1</sub>) / (t<sub>2</sub> − t<sub>1</sub>)<small>tasa relativa por unidad de tiempo (aquí, por mes)</small></div>
+  <div class="ex" data-id="r1"></div>
+  <div class="ex" data-id="r2"></div>
+  <div class="ex" data-id="r3"></div>
+  <div class="ex" data-id="r4"></div>
+
+  <h2>Parte B · Modelo logístico y linealización</h2>
+  <p>Cuando el tejido sano se agota, la epidemia se frena. El modelo logístico (con K = 100 %) es</p>
+  <div class="formula">y(t) = 100 / (1 + B·e<sup>−rt</sup>),  con  B = (100 − y<sub>0</sub>) / y<sub>0</sub><small>y en %, t en meses desde mayo (t = 0)</small></div>
+  <p><b>Truco del modelador:</b> la transformación <b>logit</b> convierte la curva en «S» en una recta, cuya pendiente es <span class="m">r</span>:</p>
+  <div class="formula">L(t) = ln( y / (100 − y) ) = ln(y<sub>0</sub>/(100 − y<sub>0</sub>)) + r·t<small>Recta: ordenada al origen ln(1/B), pendiente r</small></div>
+  <div class="ex" data-id="r5"></div>
+  <div class="ex" data-id="r6"></div>
+  <div class="plotbox"><canvas class="plot" id="cvLogit" style="height:300px"></canvas><div class="unit" id="logitNote">Completa los dos logit para ver la recta.</div></div>
+  <div class="ex" data-id="r7"></div>
+  <div class="callout">A partir de aquí usa el modelo redondeado <span class="m">y(t) = 100 / (1 + 49·e<sup>−0.6t</sup>)</span>, es decir, <span class="m">y<sub>0</sub> = 2 %</span>, <span class="m">B = 49</span>, <span class="m">r = 0.6</span> /mes.</div>
+  <div class="ex" data-id="r8"></div>
+  <p>Para despejar el tiempo en que se alcanza un umbral <span class="m">u</span> (%):</p>
+  <div class="formula">t<sub>u</sub> = ln( B·u / (100 − u) ) / r<small>se obtiene de 100/(1 + B e<sup>−rt</sup>) = u, aislando la exponencial y aplicando ln</small></div>
+  <div class="ex" data-id="r9"></div>
+
+  <h2>Parte C · Simulador de estrategias de manejo</h2>
+  <p>Hay dos formas de frenar una epidemia: reducir el <b>inóculo inicial</b> <span class="m">y<sub>0</sub></span> (podas sanitarias, retirar hojas enfermas, fungicida preventivo) o reducir la <b>tasa</b> <span class="m">r</span> (variedades con resistencia parcial, sombra regulada, nutrición). Compara cada estrategia (curva de color) con la epidemia de referencia (gris).</p>
+  <div class="plotbox">
+    <canvas class="plot" id="cvSim"></canvas>
+    <div class="ctrls">
+      <label>Inóculo inicial y<sub>0</sub>: <b id="lblY0">2.0</b> %<input type="range" id="slY0" min="0.1" max="5" step="0.1" value="2"></label>
+      <label>Tasa aparente de infección r: <b id="lblR">0.60</b> /mes<input type="range" id="slR" min="0.1" max="1" step="0.01" value="0.6"></label>
+      <label>Umbral de acción u: <b id="lblU">10</b> %<input type="range" id="slU" min="5" max="50" step="1" value="10"></label>
+    </div>
+    <div class="readout" id="simOut"></div>
+  </div>
+  <div class="ex" data-id="r10"></div>
+  <div class="ex" data-id="r11"></div>
+  <div class="ex" data-id="r12"></div>
+  <details><summary>Para profundizar en este caso</summary><ul class="refs">
+    <li>Arneson, P. A. (2001, rev. 2011). <a href="https://www.apsnet.org/edcenter/disimpactmngmnt/topc/EpidemiologyTemporal/Pages/default.aspx" target="_blank" rel="noopener">Plant Disease Epidemiology: Temporal Aspects</a>. <i>The Plant Health Instructor</i>, APS. <span class="why">Modelos exponencial, monomolecular y logístico, transformación logit y un simulador de manejo semejante al de esta clase.</span></li>
+    <li>Avelino, J. et al. (2015). <a href="https://doi.org/10.1007/s12571-015-0446-9" target="_blank" rel="noopener">The coffee rust crises in Colombia and Central America (2008–2013): impacts, plausible causes and proposed solutions</a>. <i>Food Security</i>, 7, 303–321. <span class="why">Impactos de la epidemia y papel del clima y la economía.</span></li>
+    <li>Madden, L. V., Hughes, G. y van den Bosch, F. (2007). <i>The Study of Plant Disease Epidemics</i>, cap. 4 «Temporal Analysis I». APS Press. <span class="why">Referencia avanzada sobre ajuste y comparación de curvas de progreso.</span></li>
+  </ul></details>
+</section>
+
+<!-- ===================== 5. FORESTAL ===================== -->
+<section class="lesson" data-title="5. Caso 2: plantación de pino" data-min="13">
+  <div class="eyebrow">Caso de estudio 2 · Forestal <span class="timechip">≈ 13 min</span></div>
+  <h1>¿Cuándo cosechar una plantación de <i>Pinus patula</i>?</h1>
+  <div class="hero pine">
+    <p style="margin-top:0">En la sierra de Zacualpan, Veracruz, productores organizados establecieron plantaciones de <i>Pinus patula</i> en terrenos agropecuarios reconvertidos (Santiago-García et al., 2014). Para planear el manejo necesitan dos funciones: la <b>altura dominante</b> del rodal según la edad, que indica la calidad del sitio, y el <b>volumen</b> de madera por hectárea, que define el mejor momento de corta.</p>
+    <p style="margin-bottom:0">Ambas se modelan con la función de <b>Chapman-Richards</b>, muy usada en biometría forestal en México: <span class="m">y = A(1 − e<sup>−kt</sup>)<sup>c</sup></span>. <span class="pill">datos ilustrativos con fines didácticos</span></p>
+  </div>
+  <h2>Parte A · Ajusta el modelo de altura</h2>
+  <p>Datos de análisis troncal (altura de árboles dominantes a distintas edades). Mueve los parámetros hasta que la curva pase cerca de los puntos. El <b>RMSE</b> (raíz del error cuadrático medio) te dice, en metros, cuánto se equivoca el modelo en promedio.</p>
+  <table id="tabAltura"></table>
+  <div class="plotbox">
+    <canvas class="plot" id="cvAltura"></canvas>
+    <div class="ctrls">
+      <label>A, altura asintótica: <b id="lblA">25.0</b> m<input type="range" id="slA" min="20" max="45" step="0.1" value="25"></label>
+      <label>k, tasa de crecimiento: <b id="lblK">0.100</b> /año<input type="range" id="slK" min="0.02" max="0.15" step="0.001" value="0.1"></label>
+      <label>c, parámetro de forma: <b id="lblC">1.00</b><input type="range" id="slC" min="0.8" max="3" step="0.01" value="1"></label>
+    </div>
+    <div class="readout"><span>RMSE: <b id="rmseOut">–</b> m</span><span>H(20) con tu ajuste: <b id="h20Out">–</b> m</span></div>
+  </div>
+  <div class="ex" data-id="b1"></div>
+  <div class="callout">El modelo de referencia ajustado por mínimos cuadrados es <span class="m">H(t) = 34(1 − e<sup>−0.06t</sup>)<sup>1.6</sup></span>. Úsalo en las siguientes preguntas.</div>
+  <div class="ex" data-id="b2"></div>
+  <div class="ex" data-id="b3"></div>
+
+  <h2>Parte B · Volumen, incrementos y turno técnico</h2>
+  <p>El volumen por hectárea del rodal se modela como <span class="m">V(t) = 900(1 − e<sup>−0.07t</sup>)<sup>3</sup></span> m³/ha. Dos funciones derivadas guían la decisión de corta:</p>
+  <div class="grid2">
+    <div class="formula">IMA(t) = V(t) / t<small>Incremento medio anual: promedio de m³/ha producidos por año desde la plantación</small></div>
+    <div class="formula">ICA ≈ [V(t) − V(t−5)] / 5<small>Incremento corriente anual: lo que crece por año en el periodo más reciente</small></div>
+  </div>
+  <p>El <b>turno técnico</b> (o de máxima producción) es la edad en que el IMA es máximo; ahí las curvas de ICA e IMA se cruzan. Cortar antes o después reduce la producción media anual de madera.</p>
+  <table id="tabVol"></table>
+  <div class="ex" data-id="b4"></div>
+  <div class="ex" data-id="b5"></div>
+  <div class="ex" data-id="b6"></div>
+  <div class="plotbox"><canvas class="plot" id="cvIMA"></canvas><div class="unit">ICA anual (verde) e IMA (dorado). Pasa el cursor para leer valores.</div><div class="readout" id="imaHover"></div></div>
+  <div class="ex" data-id="b7"></div>
+  <div class="ex" data-id="b8"></div>
+  <details><summary>Para profundizar en este caso</summary><ul class="refs">
+    <li>Santiago-García, W. et al. (2014). <a href="https://www.redalyc.org/pdf/634/63439007007.pdf" target="_blank" rel="noopener">Crecimiento maderable y biomasa aérea en plantaciones jóvenes de <i>Pinus patula</i> en Zacualpan, Veracruz</a>. <i>Revista Mexicana de Ciencias Forestales</i>, 5(23), 78–91. <span class="why">Curvas de índice de sitio con Chapman-Richards en plantaciones veracruzanas.</span></li>
+    <li><a href="https://revistafitotecniamexicana.org/documentos/43-4/11a.pdf" target="_blank" rel="noopener">Ecuaciones dinámicas de crecimiento en altura dominante e índice de sitio para <i>Pinus patula</i></a>. <i>Revista Fitotecnia Mexicana</i>, 43(4). <span class="why">Altura dominante cercana a 29 m a los 40 años en Ixtlán, Oaxaca.</span></li>
+    <li>Burkhart, H. E. y Tomé, M. (2012). <i>Modeling Forest Trees and Stands</i>. Springer. <span class="why">Texto de referencia sobre modelos de crecimiento y rendimiento.</span></li>
+  </ul></details>
+</section>
+
+<!-- ===================== 6. CIERRE ===================== -->
+<section class="lesson" data-title="6. Cierre y autoevaluación" data-min="4">
+  <div class="eyebrow">Sección 6 <span class="timechip">≈ 4 min</span></div>
+  <h1>Cierre y autoevaluación</h1>
+  <div class="grid3">
+    <article><h3>Funciones</h3><p>Una entrada, una salida. El dominio lo fija el contexto agronómico.</p></article>
+    <article><h3>Familias</h3><p>Lineal suma, exponencial multiplica, logística y Chapman-Richards se saturan.</p></article>
+    <article><h3>Modelar</h3><p>Datos → familia → parámetros → validar → decidir. Cuidado al extrapolar.</p></article>
+  </div>
+  <div class="ex" data-id="q1"></div>
+  <div class="ex" data-id="q2"></div>
+  <div class="ex" data-id="q3"></div>
+  <div class="ex" data-id="q4"></div>
+  <div class="ex" data-id="q5"></div>
+  <div class="ex" data-id="q6"></div>
+</section>
+
+<!-- ===================== 7. REFERENCIAS ===================== -->
+<section class="lesson" data-title="7. Referencias" data-min="1">
+  <div class="eyebrow">Sección 7</div>
+  <h1>Referencias y recursos para profundizar</h1>
+  <h2>Funciones y modelado</h2>
+  <ul class="refs">
+    <li>Stewart, J., Redlin, L. y Watson, S. <i>Precálculo: Matemáticas para el cálculo</i>. Cengage Learning. Caps. 2 (funciones) y 4 (funciones exponenciales y logarítmicas). <span class="why">Texto base; incluye modelado con funciones exponenciales y logísticas.</span></li>
+    <li>LibreTexts Español. <a href="https://espanol.libretexts.org/Bookshelves/Matematicas/Precalculo_y_Trigonometria/Prec%C3%A1lculo_(OpenStax)/01:_Funciones/1.02:_Dominio_y_Rango" target="_blank" rel="noopener">Precálculo (OpenStax) · 1.2 Dominio y rango</a>. <span class="why">Libro abierto y gratuito, con ejercicios y soluciones.</span></li>
+    <li><a href="https://www.geogebra.org/graphing" target="_blank" rel="noopener">GeoGebra Calculadora gráfica</a> y <a href="https://www.desmos.com/calculator?lang=es" target="_blank" rel="noopener">Desmos</a>. <span class="why">Para graficar tus propias funciones con deslizadores, como en el explorador.</span></li>
+  </ul>
+  <h2>Caso 1: epidemiología de la roya</h2>
+  <ul class="refs">
+    <li>Arneson, P. A. (2001, rev. 2011). <a href="https://www.apsnet.org/edcenter/disimpactmngmnt/topc/EpidemiologyTemporal/Pages/default.aspx" target="_blank" rel="noopener">Plant Disease Epidemiology: Temporal Aspects</a>. The Plant Health Instructor. DOI: 10.1094/PHI-A-2001-0524-01.</li>
+    <li>Avelino, J., Cristancho, M., Georgiou, S., Imbach, P., Aguilar, L., Bornemann, G., Läderach, P., Anzueto, F., Hruska, A. J. y Morales, C. (2015). <a href="https://doi.org/10.1007/s12571-015-0446-9" target="_blank" rel="noopener">The coffee rust crises in Colombia and Central America (2008–2013)</a>. <i>Food Security</i>, 7(2), 303–321.</li>
+    <li>Van der Plank, J. E. (1963). <i>Plant Diseases: Epidemics and Control</i>. Academic Press. <span class="why">Obra clásica donde se define la tasa aparente de infección.</span></li>
+    <li>Madden, L. V., Hughes, G. y van den Bosch, F. (2007). <i>The Study of Plant Disease Epidemics</i>. APS Press. <a href="https://doi.org/10.1094/9780890545058.004" target="_blank" rel="noopener">Cap. 4</a>.</li>
+  </ul>
+  <h2>Caso 2: crecimiento forestal</h2>
+  <ul class="refs">
+    <li>Santiago-García, W. et al. (2014). <a href="https://www.redalyc.org/pdf/634/63439007007.pdf" target="_blank" rel="noopener">Crecimiento maderable y biomasa aérea en plantaciones jóvenes de <i>Pinus patula</i> en Zacualpan, Veracruz</a>. <i>Rev. Mex. Cienc. For.</i>, 5(23), 78–91.</li>
+    <li><a href="https://revistafitotecniamexicana.org/documentos/43-4/11a.pdf" target="_blank" rel="noopener">Ecuaciones dinámicas de crecimiento en altura dominante e índice de sitio para <i>Pinus patula</i></a>. <i>Rev. Fitotec. Mex.</i>, 43(4).</li>
+    <li>Clutter, J. L., Fortson, J. C., Pienaar, L. V., Brister, G. H. y Bailey, R. L. (1983). <i>Timber Management: A Quantitative Approach</i>. Wiley. <span class="why">Conceptos de IMA, ICA y turno.</span></li>
+    <li>Burkhart, H. E. y Tomé, M. (2012). <i>Modeling Forest Trees and Stands</i>. Springer.</li>
+  </ul>
+  <div class="callout warn">Los datos de los casos son <b>ilustrativos</b>: se construyeron para que los cálculos sean claros y sus órdenes de magnitud son coherentes con la literatura citada, pero no son mediciones de una finca o plantación concreta.</div>
+</section>
+
+<!-- ===================== 8. REPORTE ===================== -->
+<section class="lesson" data-title="8. Reporte PDF" data-min="1">
+  <div class="eyebrow">Sección 8</div>
+  <h1>Genera tu reporte para Eminus 4</h1>
+  <p class="lead">El PDF incluye portada con tus datos, todas tus respuestas con su resultado, tus gráficas (ajuste de roya, simulador y ajuste forestal), tus respuestas abiertas y tu puntaje.</p>
+  <div class="grid2">
+    <article><h3>Lista de verificación</h3><ul class="check" id="checklist"></ul></article>
+    <article><h3>Resumen</h3><div id="resumen"></div></article>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+    <button id="btnPDF">Descargar reporte PDF</button>
+    <button id="btnReset" class="danger">Borrar mi avance</button>
+    <span id="pdfMsg" class="unit"></span>
+  </div>
+  <div class="callout info"><b>Entrega en Eminus 4:</b> abre la actividad, en «Adjuntar evidencias» sube el archivo <span class="m">FuncionesModelado_&lt;matrícula&gt;.pdf</span> y pulsa «Entregar actividad». Puedes generar el PDF aunque te falten ejercicios; los pendientes aparecerán como «sin responder».</div>
+</section>
+
+<div class="pager"><button id="btnPrev" class="secondary">← Anterior</button><button id="btnNext">Siguiente →</button></div>
+</main>
+<div id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+'use strict';
+/* ================= Utilidades y estado ================= */
+const $ = s=>document.querySelector(s), $$ = s=>[...document.querySelectorAll(s)];
+const KEY='funciones_modelado_v1';
+const DOCENTE='Dr. Gustavo Ortiz Hernández', EE='Matemáticas', TEMA='Funciones y Modelado de Funciones';
+let S = {nombre:'', matricula:'', res:{}, lesson:0, visited:[0], t0:Date.now(), secs:0, fit:null, sim:{y0:2,r:0.6,u:10}, rr:0.4, slFit:{A:25,k:0.1,c:1}};
+try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(S, JSON.parse(raw)); } catch(e) {}
+let saveT=null;
+function save(){ clearTimeout(saveT); saveT=setTimeout(()=>{ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }, 200); }
+function toast(t, ms=3500){ const el=$('#toast'); el.textContent=t; el.style.display='block'; clearTimeout(el._t); el._t=setTimeout(()=>el.style.display='none', ms); }
+const fmt = (x,d=2)=> (x===null||x===undefined||!isFinite(x)) ? '–' : Number(x).toLocaleString('es-MX',{minimumFractionDigits:d,maximumFractionDigits:d});
+const parseNum = s=>{ if (s===null||s===undefined) return NaN; s=String(s).trim().replace(/\s/g,'').replace(',', '.'); if(!/^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?$/i.test(s)) return NaN; return parseFloat(s); };
+setInterval(()=>{ if (!document.hidden) { S.secs += 15; save(); } }, 15000);
+
+/* ================= Modelos y datos ================= */
+const ROYA = {meses:['May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene'], y:[2.0,3.5,6.5,10.6,18.8,28.4,43.5,56.8,71.5]};
+const logis = (t,y0,r)=> 100/(1+((100-y0)/y0)*Math.exp(-r*t));
+const tUmbral = (y0,r,u)=> Math.log(((100-y0)/y0)*u/(100-u))/r;
+const logit = y=> Math.log(y/(100-y));
+const ALT = {t:[5,10,15,20,25,30,35,40], h:[4.2,9.1,15.1,18.8,23.1,25.2,27.9,29.0]};
+const CR = (t,A,k,c)=> A*Math.pow(1-Math.exp(-k*t), c);
+const H = t=> CR(t,34,0.06,1.6);
+const V = t=> CR(t,900,0.07,3);
+const rmse = (A,k,c)=> Math.sqrt(ALT.t.reduce((s,t,i)=>s+(CR(t,A,k,c)-ALT.h[i])**2,0)/ALT.t.length);
+
+/* ================= Banco de ejercicios ================= */
+// tipo: num | mc | match | text | fit
+const EX = {
+ f1:{sec:1,tipo:'mc',pts:1,enun:'¿Cuál de las siguientes relaciones NO es una función?',
+   opts:['Parcela del campo experimental → rendimiento de maíz medido en 2025 (t/ha)','Edad de un árbol marcado (años) → su altura (m)','Variedad de café → altura de las plantas de un lote de esa variedad','Hora del día → temperatura registrada por el sensor del invernadero'],ans:2,
+   hint:'Busca la relación en la que una misma entrada tenga varias salidas posibles.',
+   exp:'Una variedad (entrada) corresponde a muchas plantas con alturas distintas: una entrada, varias salidas. Las otras asignan un único valor a cada entrada.'},
+ f2:{sec:1,tipo:'mc',pts:1,enun:'Un modelo H(t) describe la altura de un rodal de pino entre 5 y 40 años de edad, que es el rango de los datos medidos. ¿Cuál es el dominio más adecuado para usar el modelo con confianza?',
+   opts:['Todos los números reales','t ≥ 0','5 ≤ t ≤ 40','t > 40'],ans:2,
+   hint:'Piensa en dónde se tienen datos que respalden al modelo.',
+   exp:'El dominio práctico lo da el contexto y los datos: entre 5 y 40 años. Matemáticamente la fórmula acepta más valores, pero fuera de ese intervalo sería extrapolar.'},
+ f3:{sec:1,tipo:'num',pts:1,enun:'Con h(t) = 4 + 1.5t, ¿qué altura tendrá la plántula de cedro a las 10 semanas?',unit:'cm',ans:19,tol:0.05,
+   hint:'Sustituye t = 10 en la fórmula.',exp:'h(10) = 4 + 1.5(10) = 4 + 15 = 19 cm.'},
+ f4:{sec:1,tipo:'num',pts:1,enun:'La plántula se lleva a campo cuando mide 30 cm. ¿A cuántas semanas ocurre? (dos decimales)',unit:'semanas',ans:17.333,tol:0.06,
+   hint:'Resuelve 4 + 1.5t = 30 para t.',exp:'1.5t = 26 → t = 26/1.5 = 17.33 semanas (≈ 4 meses).'},
+ f5:{sec:1,tipo:'mc',pts:1,enun:'En h(t) = 4 + 1.5t, ¿qué significa el número 1.5?',
+   opts:['La altura inicial de la plántula','La plántula crece 1.5 cm cada semana','La plántula tarda 1.5 semanas en crecer 1 cm','La altura máxima que alcanzará'],ans:1,
+   hint:'Es la pendiente: cambio de h por cada unidad de t.',exp:'La pendiente es la razón de cambio: 1.5 cm por semana. El 4 es la altura inicial (ordenada al origen).'},
+ f6:{sec:2,tipo:'match',pts:2.5,enun:'Relaciona cada fenómeno con la familia de funciones que mejor lo describe.',
+   items:['Costo total del fertilizante según los kg comprados (precio fijo por kg)','Rendimiento del maíz según la dosis de N: sube, llega a un máximo y baja con exceso','Biomasa de un árbol según su diámetro: B = a·D^{b}','Población de pulgones en sus primeros días, sin depredadores ni límite de alimento','Porcentaje de hojas enfermas que aumenta y se satura cerca del 100 %'],
+   choices:['Lineal','Cuadrática','Potencia','Exponencial','Logística'],ans:[0,1,2,3,4],
+   hint:'Fíjate en la forma: ¿suma constante, máximo, potencia, multiplica, se satura?',
+   exp:'Costo → lineal; rendimiento vs. N → cuadrática; alometría → potencia; plaga inicial → exponencial; incidencia que se satura → logística.'},
+ f7:{sec:2,tipo:'mc',pts:1,enun:'Observa las tablas A y B. ¿Qué tipo de relación muestra cada una?',
+   opts:['A exponencial y B lineal','A lineal (suma 15 cada semana) y B exponencial (multiplica por 1.5)','Ambas lineales','Ambas exponenciales'],ans:1,
+   hint:'Calcula diferencias en A y cocientes en B.',exp:'A: 65−50 = 80−65 = 95−80 = 15 (diferencia constante → lineal). B: 75/50 = 112.5/75 = 1.5 (cociente constante → exponencial).'},
+ f8:{sec:2,tipo:'num',pts:1,enun:'Si el patrón de la tabla B continúa, ¿cuántos pulgones por planta habrá en la semana 4? (un decimal)',unit:'pulgones',ans:253.125,tol:0.2,
+   hint:'Multiplica el último valor por el factor de crecimiento.',exp:'168.75 × 1.5 = 253.1. Equivale a y = 50·1.5^t con t = 4, o a y = 50·e^{0.405t}, porque ln 1.5 ≈ 0.405.'},
+ f9:{sec:3,tipo:'match',pts:1.5,enun:'Ordena los pasos del ciclo de modelado (1 = primero, 6 = último).',
+   items:['Estimar los parámetros con los datos','Plantear el problema real y su propósito','Interpretar resultados y tomar decisiones','Formular supuestos y definir variables y unidades','Validar: comparar con datos nuevos o con el conocimiento agronómico','Elegir la familia de funciones'],
+   choices:['Paso 1','Paso 2','Paso 3','Paso 4','Paso 5','Paso 6'],ans:[3,0,5,1,4,2],
+   hint:'Antes de calcular hay que saber qué se quiere y qué se supone.',
+   exp:'1 Problema → 2 Supuestos y variables → 3 Familia → 4 Parámetros → 5 Validación → 6 Interpretación y decisión.'},
+ f10:{sec:3,tipo:'mc',pts:1,enun:'Un modelo es «bueno» cuando…',
+   opts:['pasa exactamente por todos los puntos medidos','describe bien los datos, es coherente con el fenómeno y sirve para el propósito','tiene muchos parámetros','predice cualquier valor, aunque esté lejos del rango de datos'],ans:1,
+   hint:'Recuerda: simplificación útil.',exp:'Un modelo con demasiados parámetros puede pasar por todos los puntos y aun así predecir mal (sobreajuste). Importan el ajuste, el sentido biológico y la utilidad.'},
+ r1:{sec:4,tipo:'num',pts:0.5,enun:'Lee la tabla: ¿cuál es la incidencia en agosto (t = 3)?',unit:'%',ans:10.6,tol:0.01,hint:'Agosto corresponde a t = 3.',exp:'y(3) = 10.6 %: en agosto ya se superó el umbral de 10 %.'},
+ r2:{sec:4,tipo:'num',pts:1.5,enun:'Con los datos de mayo (t = 0, 2.0 %) y julio (t = 2, 6.5 %), calcula la tasa exponencial r (tres decimales).',unit:'/mes',ans:0.5893,tol:0.006,
+   hint:'r = ln(6.5/2.0) / (2 − 0).',exp:'r = ln(3.25)/2 = 1.1787/2 = 0.589 por mes: la incidencia crece ≈ 59 % relativo cada mes en la fase inicial.'},
+ r3:{sec:4,tipo:'num',pts:1,enun:'Con el modelo exponencial y = 2·e^{rt} y tu r, ¿qué incidencia predice para enero (t = 8)?',unit:'%',ans:223.1,tol:4,
+   hint:'Calcula 2·e^{8r}.',exp:'y(8) = 2·e^{0.589·8} = 2·e^{4.71} ≈ 223 %.'},
+ r4:{sec:4,tipo:'mc',pts:1,enun:'¿Por qué esa predicción no es realista?',
+   opts:['Porque r está mal calculado','Porque la incidencia no puede superar 100 %: al agotarse las hojas sanas la epidemia se frena y el modelo exponencial deja de servir','Porque en enero llueve menos','Porque el modelo exponencial siempre decrece'],ans:1,
+   hint:'¿Qué unidades tiene y? ¿Cuál es su valor máximo posible?',exp:'Es un error de extrapolación: el modelo exponencial supone crecimiento sin límite. Hace falta un modelo con saturación, como el logístico.'},
+ r5:{sec:4,tipo:'num',pts:0.5,enun:'Calcula el logit en julio: L = ln(6.5 / (100 − 6.5)) (tres decimales).',unit:'',ans:-2.6662,tol:0.006,
+   hint:'ln(6.5/93.5). El resultado es negativo.',exp:'L(2) = ln(0.06952) = −2.666.'},
+ r6:{sec:4,tipo:'num',pts:0.5,enun:'Calcula el logit en noviembre: L = ln(43.5 / (100 − 43.5)) (tres decimales).',unit:'',ans:-0.2615,tol:0.006,
+   hint:'ln(43.5/56.5).',exp:'L(6) = ln(0.7699) = −0.261.'},
+ r7:{sec:4,tipo:'num',pts:1.5,enun:'Con tus dos logit, calcula la pendiente de la recta, que es la tasa logística r = [L(6) − L(2)] / (6 − 2) (tres decimales).',unit:'/mes',ans:0.6012,tol:0.008,
+   hint:'(−0.261 − (−2.666)) / 4.',exp:'r = 2.405/4 = 0.601 por mes. ¡Compárala con el r que hizo mínimo el SSE en la gráfica!'},
+ r8:{sec:4,tipo:'num',pts:1,enun:'Con y(t) = 100 / (1 + 49·e^{−0.6t}), ¿qué incidencia predice el modelo para septiembre (t = 4)? (un decimal)',unit:'%',ans:18.36,tol:0.15,
+   hint:'e^{−2.4} ≈ 0.0907.',exp:'y(4) = 100/(1 + 49·0.0907) = 100/5.445 = 18.4 %. El dato observado fue 18.8 %: buen ajuste.'},
+ r9:{sec:4,tipo:'num',pts:1.5,enun:'¿En qué mes t se alcanza el umbral de acción u = 10 %? Usa t = ln(B·u/(100 − u)) / r con B = 49 y r = 0.6 (dos decimales).',unit:'meses',ans:2.8243,tol:0.03,
+   hint:'B·u/(100 − u) = 49·10/90 = 5.444.',exp:'t = ln(5.444)/0.6 = 1.695/0.6 = 2.82 meses después de mayo, es decir, hacia finales de julio. La aplicación de control debe planearse antes.'},
+ r10:{sec:4,tipo:'num',pts:1,enun:'Una variedad con resistencia parcial reduce r a la mitad (r = 0.3) con el mismo y₀ = 2 %. ¿En qué mes se alcanza ahora el 10 %? Puedes comprobarlo con el simulador (dos decimales).',unit:'meses',ans:5.6487,tol:0.05,
+   hint:'Mismo numerador, ln(5.444), pero divide entre 0.3.',exp:'t = 1.695/0.3 = 5.65 meses: se gana ≈ 2.8 meses respecto a la referencia.'},
+ r11:{sec:4,tipo:'mc',pts:1,enun:'Con el simulador compara: (a) reducir el inóculo a y₀ = 0.5 % con r = 0.6, y (b) reducir la tasa a r = 0.3 con y₀ = 2 %. ¿Qué conclusión es correcta?',
+   opts:['Ambas estrategias tienen exactamente el mismo efecto en toda la epidemia','(a) retrasa el umbral ≈ 2.3 meses pero la curva sigue igual de empinada; (b) retrasa ≈ 2.8 meses y además frena toda la epidemia (en enero la incidencia es mucho menor)','Reducir el inóculo siempre es mejor que reducir r','Ninguna cambia el momento en que se alcanza el umbral'],ans:1,
+   hint:'Mira el tiempo al umbral y la incidencia en enero (t = 8) de cada estrategia.',
+   exp:'Reducir y₀ sólo desplaza la curva en el tiempo; reducir r cambia su pendiente. Por eso, en epidemias policíclicas, reducir la tasa (resistencia, manejo de sombra y nutrición) tiene efectos durante toda la temporada. Lo ideal es combinar ambas.'},
+ r12:{sec:4,tipo:'text',pts:2,min:40,enun:'Recomendación técnica: escribe al productor (mínimo 40 palabras) cuándo debería actuar, qué estrategia le recomiendas y qué limitaciones tiene el modelo.'},
+ b1:{sec:5,tipo:'fit',pts:2,enun:'Registra tu ajuste del modelo de altura. Se acepta si el RMSE es menor o igual a 0.80 m.',ans:0.8},
+ b2:{sec:5,tipo:'num',pts:1,enun:'Con H(t) = 34(1 − e^{−0.06t})^{1.6}, calcula la altura dominante a los 20 años (índice de sitio a edad base 20) (dos decimales).',unit:'m',ans:19.162,tol:0.1,
+   hint:'e^{−1.2} ≈ 0.3012; luego eleva (1 − 0.3012) a la 1.6.',exp:'H(20) = 34·(0.6988)^{1.6} = 34·0.5636 = 19.16 m. El sitio tiene índice de sitio ≈ 19 m a los 20 años.'},
+ b3:{sec:5,tipo:'mc',pts:0.5,enun:'¿Qué significa el parámetro A = 34 en el modelo de altura?',
+   opts:['La altura a los 34 años','La altura máxima (asíntota) a la que tiende el rodal en ese sitio','La velocidad de crecimiento en m/año','El número de árboles por hectárea'],ans:1,
+   hint:'¿A qué valor tiende H(t) cuando t es muy grande?',exp:'Cuando t crece, e^{−kt} → 0 y H → A. A es la asíntota: la altura máxima esperada en ese sitio.'},
+ b4:{sec:5,tipo:'num',pts:1,enun:'Calcula el volumen a los 30 años: V(30) = 900(1 − e^{−2.1})³ (un decimal).',unit:'m³/ha',ans:608.2,tol:1.5,
+   hint:'e^{−2.1} ≈ 0.1225.',exp:'V(30) = 900·(0.8775)³ = 900·0.6757 = 608.2 m³/ha.'},
+ b5:{sec:5,tipo:'num',pts:1,enun:'Calcula el IMA a los 30 años (dos decimales).',unit:'m³/ha/año',ans:20.273,tol:0.06,
+   hint:'IMA = V(30)/30.',exp:'IMA(30) = 608.2/30 = 20.27 m³/ha/año.'},
+ b6:{sec:5,tipo:'num',pts:1,enun:'Calcula el ICA entre los 25 y 30 años: [V(30) − V(25)]/5. Toma V(25) de la tabla (dos decimales).',unit:'m³/ha/año',ans:20.12,tol:0.12,
+   hint:'(608.2 − 507.6)/5.',exp:'ICA = 100.6/5 = 20.12 m³/ha/año. Ya es menor que el IMA(30) = 20.27: el IMA dejó de subir.'},
+ b7:{sec:5,tipo:'num',pts:1,enun:'Usando la gráfica (pasa el cursor) o la tabla, ¿a qué edad, en años enteros, es máximo el IMA (turno técnico)?',unit:'años',ans:27,tol:1,
+   hint:'Busca el punto más alto de la curva dorada, donde la verde la cruza.',exp:'El IMA alcanza su máximo, ≈ 20.4 m³/ha/año, alrededor de los 27 años, donde ICA = IMA.'},
+ b8:{sec:5,tipo:'text',pts:1.5,min:30,enun:'Un comprador ofrece cortar a los 15 años. Con los valores de IMA de la tabla, explica (mínimo 30 palabras) qué se pierde en producción media anual y qué otros factores (precio, diámetro, carbono, riesgo) considerarías.'},
+ q1:{sec:6,tipo:'mc',pts:0.5,enun:'En y = y₀e^{rt}, si r se duplica…',opts:['y se duplica en cada instante','la tasa relativa de crecimiento se duplica y la curva sube mucho más rápido','y₀ se duplica','no cambia nada'],ans:1,exp:'r es la tasa relativa: duplicarla hace que el tiempo de duplicación se reduzca a la mitad.'},
+ q2:{sec:6,tipo:'mc',pts:0.5,enun:'En la curva logística, el punto de inflexión (crecimiento más rápido) ocurre cuando…',opts:['y = 0','y = K/2','y = K','t = 0'],ans:1,exp:'La logística crece más rápido a la mitad de la capacidad: y = K/2 (aquí, 50 % de incidencia).'},
+ q3:{sec:6,tipo:'mc',pts:0.5,enun:'¿Qué transformación convierte una curva logística en una recta?',opts:['y²','√y','ln( y / (K − y) )','1/y'],ans:2,exp:'El logit lineariza la logística; su pendiente es r.'},
+ q4:{sec:6,tipo:'mc',pts:0.5,enun:'El turno técnico de una plantación ocurre cuando…',opts:['el volumen es máximo','la altura llega a A','el IMA es máximo, donde ICA = IMA','el ICA es máximo'],ans:2,exp:'En el máximo del IMA se igualan ICA e IMA.'},
+ q5:{sec:6,tipo:'mc',pts:0.5,enun:'Extrapolar un modelo fuera del rango de los datos…',opts:['siempre es correcto si el ajuste fue bueno','puede dar resultados irreales; hay que justificarlo con el conocimiento del fenómeno','está prohibido','sólo falla en funciones lineales'],ans:1,exp:'Lo viste con la roya: el modelo exponencial predijo 223 %.'},
+ q6:{sec:6,tipo:'text',pts:1,min:30,enun:'Reflexión (mínimo 30 palabras): ¿qué aprendiste hoy y en qué otro problema agronómico, pecuario, ambiental o forestal usarías una función para decidir?'}
+};
+const SECS = ['Inicio','¿Qué es una función?','Familias de funciones','Ciclo de modelado','Caso 1: roya del cafeto','Caso 2: plantación de pino','Cierre y autoevaluación'];
+const totalPts = ()=> Object.values(EX).reduce((a,e)=>a+e.pts,0);
+const autoPts = ()=> Object.values(EX).filter(e=>e.tipo!=='text').reduce((a,e)=>a+e.pts,0);
+const earned = ()=> Object.keys(EX).reduce((a,id)=>a+((S.res[id]&&S.res[id].pts)||0),0);
+const isDone = id=>{ const r=S.res[id]; return !!(r && (r.ok || r.closed || (EX[id].tipo==='text' && r.val))); };
+
+/* ================= Render de ejercicios ================= */
+const esc = s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const mathify = s=> esc(s).replace(/\^\{([^}]+)\}/g,'<sup>$1</sup>').replace(/\^(\d+)/g,'<sup>$1</sup>').replace(/₀/g,'<sub>0</sub>');
+let exNum = 0;
+function renderEx(box){
+  const id=box.dataset.id, e=EX[id]; exNum++; e.n=exNum;
+  let h = `<div class="tag"><span>Ejercicio ${exNum}${e.tipo==='text'?' · respuesta abierta':''}</span><span class="pts">${fmt(e.pts,e.pts%1?1:0)} pts</span></div><div class="enun">${mathify(e.enun)}</div>`;
+  if (e.tipo==='num') h += `<div class="row"><input type="text" inputmode="decimal" id="in_${id}" aria-label="Respuesta"> <span class="unit">${esc(e.unit||'')}</span><button data-check="${id}">Comprobar</button></div>`;
+  if (e.tipo==='mc') h += `<div class="opts">${e.opts.map((o,i)=>`<label><input type="radio" name="in_${id}" value="${i}">${mathify(o)}</label>`).join('')}</div><button data-check="${id}">Comprobar</button>`;
+  if (e.tipo==='match') h += `<div class="items">${e.items.map((it,i)=>`<div>${mathify(it)}</div><select id="in_${id}_${i}"><option value="">— elige —</option>${e.choices.map((c,j)=>`<option value="${j}">${esc(c)}</option>`).join('')}</select>`).join('')}</div><button data-check="${id}">Comprobar</button>`;
+  if (e.tipo==='text') h += `<textarea id="in_${id}" placeholder="Escribe aquí con tus palabras…"></textarea><div class="row" style="justify-content:space-between"><span class="counter" id="cnt_${id}">0 palabras</span><button data-check="${id}">Guardar respuesta</button></div>`;
+  if (e.tipo==='fit') h += `<div class="row"><button data-check="${id}">Registrar mi ajuste</button><span class="unit" id="fitInfo"></span></div>`;
+  h += `<div class="fb" id="fb_${id}"></div>`;
+  box.innerHTML = h;
+  if (e.tipo==='text') $('#in_'+id).addEventListener('input', ev=>{ $('#cnt_'+id).textContent = words(ev.target.value)+' palabras'; });
+  restoreEx(id);
+}
+const words = s=> (s.trim().match(/\S+/g)||[]).length;
+function readVal(id){
+  const e=EX[id];
+  if (e.tipo==='num') return $('#in_'+id).value;
+  if (e.tipo==='mc') { const r=document.querySelector(`input[name="in_${id}"]:checked`); return r? +r.value : null; }
+  if (e.tipo==='match') return e.items.map((_,i)=> $(`#in_${id}_${i}`).value===''? null : +$(`#in_${id}_${i}`).value);
+  if (e.tipo==='text') return $('#in_'+id).value;
+  if (e.tipo==='fit') return {...S.slFit, rmse: rmse(S.slFit.A,S.slFit.k,S.slFit.c)};
+}
+function grade(id, v){
+  const e=EX[id];
+  if (e.tipo==='num'){ const x=parseNum(v); if (!isFinite(x)) return {invalid:'Escribe un número (usa punto o coma decimal).'}; return {ok: Math.abs(x-e.ans)<=e.tol, frac:null}; }
+  if (e.tipo==='mc'){ if (v===null) return {invalid:'Elige una opción.'}; return {ok: v===e.ans}; }
+  if (e.tipo==='match'){ if (v.some(x=>x===null)) return {invalid:'Completa todas las opciones.'}; const k=v.filter((x,i)=>x===e.ans[i]).length; return {ok:k===e.ans.length, frac:k/e.ans.length, k}; }
+  if (e.tipo==='fit'){ return {ok: v.rmse<=e.ans}; }
+}
+function check(id){
+  const e=EX[id], v=readVal(id), fb=$('#fb_'+id), box=document.querySelector(`.ex[data-id="${id}"]`);
+  const r = S.res[id] || {tries:0};
+  if (r.ok || r.closed) { toast('Este ejercicio ya está cerrado.'); return; }
+  if (e.tipo==='text'){
+    const w=words(v); if (w < e.min) { fb.className='fb bad'; fb.innerHTML=`Escribe al menos ${e.min} palabras (llevas ${w}).`; return; }
+    S.res[id] = {val:v, pts:0, tries:1, pending:true}; fb.className='fb note'; fb.innerHTML='Respuesta guardada ✓. La calificará el docente al revisar tu reporte; puedes editarla y volver a guardar.';
+    box.classList.add('done'); after(); return;
+  }
+  const g = grade(id,v);
+  if (g.invalid){ fb.className='fb bad'; fb.textContent=g.invalid; return; }
+  r.tries++; r.val=v;
+  if (e.tipo==='fit') { r.fit = v; }
+  if (g.ok){
+    r.ok=true; r.pts = r.tries===1 ? e.pts : e.pts/2;
+    fb.className='fb ok'; fb.innerHTML = `<b>¡Correcto!</b> ${r.tries>1?'(segundo intento, mitad de puntos) ':''}${e.exp? mathify(e.exp):''}${e.tipo==='fit'?` RMSE = ${fmt(v.rmse,3)} m con A = ${fmt(v.A,1)}, k = ${fmt(v.k,3)}, c = ${fmt(v.c,2)}.`:''}`;
+  } else if (r.tries < 2 && e.tipo!=='fit'){
+    fb.className='fb bad'; fb.innerHTML = `<b>Aún no.</b> ${g.k!==undefined?`Tienes ${g.k} de ${e.ans.length} bien. `:''}Pista: ${mathify(e.hint||'revisa tu procedimiento.')} Te queda 1 intento.`;
+  } else if (e.tipo==='fit'){
+    fb.className='fb bad'; fb.innerHTML = `RMSE = ${fmt(v.rmse,3)} m: todavía es mayor que 0.80 m. Ajusta A, k y c y vuelve a registrar (intento ${r.tries}). Pista: empieza con A cerca de la altura del último dato y sube c para dar la forma de «S».`;
+    if (r.tries>=4) { r.pts=0; }
+  } else {
+    r.closed=true; r.pts = (e.tipo==='match' && g.frac) ? Math.round(e.pts*g.frac*0.5*100)/100 : 0;
+    fb.className='fb sol'; fb.innerHTML = `<b>Solución:</b> ${mathify(e.exp)}${e.tipo==='mc'?` Respuesta correcta: «${mathify(e.opts[e.ans])}».`:''}${r.pts?` (Obtienes ${fmt(r.pts,2)} pts por respuestas parciales.)`:''}`;
+  }
+  S.res[id]=r; if (r.ok) box.classList.add('done'); else if (r.closed) box.classList.add('fail');
+  if (r.ok||r.closed) lockEx(id);
+  after();
+}
+function lockEx(id){ const box=document.querySelector(`.ex[data-id="${id}"]`); box.querySelectorAll('input,select,button[data-check]').forEach(el=>el.disabled=true); }
+function restoreEx(id){
+  const e=EX[id], r=S.res[id], box=document.querySelector(`.ex[data-id="${id}"]`), fb=$('#fb_'+id);
+  if (!r) return;
+  if (e.tipo==='num' && r.val!==undefined) $('#in_'+id).value=r.val;
+  if (e.tipo==='mc' && r.val!==null && r.val!==undefined){ const el=document.querySelector(`input[name="in_${id}"][value="${r.val}"]`); if(el) el.checked=true; }
+  if (e.tipo==='match' && r.val) r.val.forEach((x,i)=>{ if(x!==null) $(`#in_${id}_${i}`).value=x; });
+  if (e.tipo==='text' && r.val){ $('#in_'+id).value=r.val; $('#cnt_'+id).textContent=words(r.val)+' palabras'; fb.className='fb note'; fb.textContent='Respuesta guardada ✓ (la califica el docente).'; box.classList.add('done'); return; }
+  if (r.ok){ box.classList.add('done'); fb.className='fb ok'; fb.innerHTML=`<b>¡Correcto!</b> ${e.exp?mathify(e.exp):''}${e.tipo==='fit'&&r.fit?` RMSE = ${fmt(r.fit.rmse,3)} m.`:''}`; lockEx(id); }
+  else if (r.closed){ box.classList.add('fail'); fb.className='fb sol'; fb.innerHTML=`<b>Solución:</b> ${mathify(e.exp)}`; lockEx(id); }
+}
+document.addEventListener('click', ev=>{ const b=ev.target.closest('button[data-check]'); if (b) check(b.dataset.check); });
+
+/* ================= Navegación ================= */
+const lessons = $$('.lesson');
+function buildNav(){
+  $('#navList').innerHTML = lessons.map((l,i)=>`<button data-go="${i}"><span class="dot" id="dot${i}"></span><span class="label">${l.dataset.title}</span><span class="min">${l.dataset.min} min</span></button>`).join('');
+  $$('#navList button').forEach(b=>b.onclick=()=>{ go(+b.dataset.go); $('#nav').classList.remove('open'); });
+}
+function go(i){
+  if (i>0 && (!S.nombre || !S.matricula)) { toast('Primero registra tu nombre y matrícula.'); i=0; }
+  i=Math.max(0,Math.min(lessons.length-1,i)); S.lesson=i; if(!S.visited.includes(i)) S.visited.push(i);
+  lessons.forEach((l,j)=>l.classList.toggle('active', j===i));
+  $$('#navList button').forEach((b,j)=>b.classList.toggle('active', j===i));
+  $('#btnPrev').disabled = i===0; $('#btnNext').textContent = i===lessons.length-1 ? 'Fin' : 'Siguiente →';
+  window.scrollTo(0,0); save(); setTimeout(drawAll, 30);
+  if (i===lessons.length-1) updateReport();
+}
+$('#btnPrev').onclick=()=>go(S.lesson-1); $('#btnNext').onclick=()=>{ if (S.lesson<lessons.length-1) go(S.lesson+1); };
+$('#menuBtn').onclick=()=>$('#nav').classList.toggle('open');
+function after(){
+  save();
+  const T=totalPts(), E=earned();
+  $('#scoreBadge').textContent = `${fmt(E,1)} / ${fmt(T,0)} pts`;
+  const ids=Object.keys(EX), done=ids.filter(isDone).length;
+  $('#progress i').style.width = (100*done/ids.length)+'%';
+  lessons.forEach((l,i)=>{ const exs=[...l.querySelectorAll('.ex')].map(x=>x.dataset.id); const d=$('#dot'+i); if(!d) return;
+    const n=exs.filter(isDone).length; d.className='dot'+((exs.length? n===exs.length : S.visited.includes(i))?' done': n? ' half':''); });
+  if (S.lesson===lessons.length-1) updateReport();
+  drawLogit(); drawRoya(); drawIMA();
+}
+
+/* ================= Registro ================= */
+$('#inNombre').value=S.nombre; $('#inMatricula').value=S.matricula;
+function updWho(){ $('#whoChip').textContent = S.nombre ? `${S.nombre} · ${S.matricula}` : 'Sin registrar'; }
+$('#btnRegistro').onclick=()=>{
+  const n=$('#inNombre').value.trim().replace(/\s+/g,' '), m=$('#inMatricula').value.trim().replace(/\s+/g,'');
+  if (n.split(' ').length<2) { $('#regMsg').textContent='Escribe tu nombre completo (al menos nombre y apellido).'; return; }
+  if (m.length<5) { $('#regMsg').textContent='Escribe tu matrícula.'; return; }
+  S.nombre=n; S.matricula=m; updWho(); save();
+  $('#regMsg').textContent = /^zS\d{8}$/i.test(m) ? '✓ Guardado.' : '✓ Guardado. (Revisa tu matrícula: el formato UV suele ser zS seguido de 8 dígitos).';
+  setTimeout(()=>go(1), 600);
+};
+
+/* ================= Gráficas ================= */
+const THEMES = {
+  dark:{bg:'#0b1626',grid:'#1c2d44',axis:'#5b7290',text:'#b2c3d9',title:'#edf4ff'},
+  light:{bg:'#ffffff',grid:'#e6ebf0',axis:'#8796a8',text:'#334155',title:'#0f172a'}
+};
+function niceStep(range, n=6){ const raw=range/n, p=Math.pow(10,Math.floor(Math.log10(raw))), f=raw/p; return (f<1.5?1:f<3?2:f<7?5:10)*p; }
+function plot(cv, o, light=false, W, Hh){
+  const th = THEMES[light?'light':'dark'], dpr = light?1:(window.devicePixelRatio||1);
+  const w = W || cv.clientWidth || 800, h = Hh || cv.clientHeight || 360;
+  if (!w) return;
+  cv.width = w*dpr; cv.height = h*dpr;
+  const c = cv.getContext('2d'); c.setTransform(dpr,0,0,dpr,0,0);
+  const fs = light?15:13;
+  c.fillStyle=th.bg; c.fillRect(0,0,w,h);
+  const L=62, R=18, T= o.title?34:16, B=48, pw=w-L-R, ph=h-T-B;
+  const X = x=> L + (x-o.x0)/(o.x1-o.x0)*pw, Y = y=> T + ph - (y-o.y0)/(o.y1-o.y0)*ph;
+  c.font=`${fs}px Segoe UI, Arial`; c.textBaseline='middle';
+  const sx=o.xstep||niceStep(o.x1-o.x0), sy=o.ystep||niceStep(o.y1-o.y0,5);
+  c.strokeStyle=th.grid; c.lineWidth=1; c.fillStyle=th.text;
+  for (let x=Math.ceil(o.x0/sx)*sx; x<=o.x1+1e-9; x+=sx){ c.beginPath(); c.moveTo(X(x),T); c.lineTo(X(x),T+ph); c.stroke(); c.textAlign='center'; c.fillText(o.xfmt?o.xfmt(x):+x.toFixed(6), X(x), T+ph+14); }
+  for (let y=Math.ceil(o.y0/sy)*sy; y<=o.y1+1e-9; y+=sy){ c.beginPath(); c.moveTo(L,Y(y)); c.lineTo(L+pw,Y(y)); c.stroke(); c.textAlign='right'; c.fillText(+y.toFixed(6), L-8, Y(y)); }
+  c.strokeStyle=th.axis; c.strokeRect(L,T,pw,ph);
+  c.textAlign='center'; c.fillText(o.xl||'', L+pw/2, h-12);
+  c.save(); c.translate(15, T+ph/2); c.rotate(-Math.PI/2); c.fillText(o.yl||'', 0, 0); c.restore();
+  if (o.title){ c.fillStyle=th.title; c.font=`bold ${fs+1}px Segoe UI, Arial`; c.textAlign='left'; c.fillText(o.title, L, 16); c.font=`${fs}px Segoe UI, Arial`; }
+  c.save(); c.beginPath(); c.rect(L,T,pw,ph); c.clip();
+  (o.series||[]).forEach(s=>{
+    c.strokeStyle=s.color; c.fillStyle=s.color; c.lineWidth=s.width||2.5; c.setLineDash(s.dash||[]);
+    if (s.fn){ c.beginPath(); let first=true; const n=300; for(let i=0;i<=n;i++){ const x=(s.from??o.x0)+((s.to??o.x1)-(s.from??o.x0))*i/n, y=s.fn(x); if(!isFinite(y)){first=true;continue;} const py=Math.max(-1e4,Math.min(1e4,Y(y))); if(first){c.moveTo(X(x),py);first=false;} else c.lineTo(X(x),py);} c.stroke(); }
+    if (s.pts){ c.setLineDash([]); s.pts.forEach(([x,y])=>{ c.beginPath(); c.arc(X(x),Y(y),s.r||5,0,7); c.fill(); if(!light){c.strokeStyle=th.bg;c.lineWidth=1.5;c.stroke();} }); }
+    if (s.hline!==undefined){ c.beginPath(); c.moveTo(L,Y(s.hline)); c.lineTo(L+pw,Y(s.hline)); c.stroke(); }
+    if (s.vline!==undefined){ c.beginPath(); c.moveTo(X(s.vline),T); c.lineTo(X(s.vline),T+ph); c.stroke(); }
+    c.setLineDash([]);
+  });
+  c.restore();
+  // leyenda
+  const leg=(o.series||[]).filter(s=>s.label); let ly=T+10;
+  c.font=`${fs-1}px Segoe UI, Arial`; c.textAlign='left';
+  const lw=Math.max(...leg.map(s=>c.measureText(s.label).width),0)+40;
+  const lx = o.legendRight===false ? L+10 : L+pw-lw-6;
+  if (leg.length){ c.fillStyle=light?'rgba(255,255,255,.92)':'rgba(11,22,38,.88)'; c.fillRect(lx-6, T+2, lw+6, leg.length*20+8); }
+  leg.forEach(s=>{ c.strokeStyle=s.color; c.fillStyle=s.color; c.lineWidth=2.5; c.setLineDash(s.dash||[]);
+    if (s.pts){ c.beginPath(); c.arc(lx+12,ly,4.5,0,7); c.fill(); } else { c.beginPath(); c.moveTo(lx,ly); c.lineTo(lx+24,ly); c.stroke(); }
+    c.setLineDash([]); c.fillStyle=th.text; c.fillText(s.label, lx+32, ly); ly+=20; });
+  return {X,Y,L,T,pw,ph,inv:(px)=>o.x0+(px-L)/pw*(o.x1-o.x0)};
+}
+const COL={data:'#f1c17d',exp:'#ff9a9a',log:'#77e3bc',ref:'#8a9bb0',strat:'#80beff',pine:'#5fc48a',gold:'#f1c17d'};
+const COLL={data:'#b7791f',exp:'#dc2626',log:'#0f9f74',ref:'#94a3b8',strat:'#2563eb',pine:'#15803d',gold:'#b7791f'};
+
+/* ---- Explorador ---- */
+const FAM = {
+  lineal:{nm:'Lineal',f:'y = m·x + b',ctx:'Altura de plántula (cm) vs. semanas',x:[0,20],y:[0,60],xl:'x (semanas)',yl:'y (cm)',p:{m:[-2,4,0.1,1.5,'pendiente m'],b:[0,30,0.5,4,'ordenada b']},fn:(x,p)=>p.m*x+p.b},
+  cuad:{nm:'Cuadrática',f:'y = a·x² + b·x + c',ctx:'Rendimiento de maíz (t/ha) vs. dosis de N (×10 kg/ha)',x:[0,30],y:[0,14],xl:'dosis de N (×10 kg/ha)',yl:'rendimiento (t/ha)',p:{a:[-0.05,0.01,0.001,-0.012,'a (curvatura)'],b:[0,1,0.01,0.42,'b'],c:[0,8,0.1,4,'c (sin fertilizar)']},fn:(x,p)=>p.a*x*x+p.b*x+p.c},
+  pot:{nm:'Potencia',f:'y = a·x^b',ctx:'Biomasa de un árbol (kg) vs. diámetro (cm)',x:[0,50],y:[0,2500],xl:'diámetro (cm)',yl:'biomasa (kg)',p:{a:[0.01,0.5,0.01,0.1,'a'],b:[1,3,0.01,2.5,'b (exponente)']},fn:(x,p)=>p.a*Math.pow(x,p.b)},
+  exp:{nm:'Exponencial',f:'y = y₀·e^{r·t}',ctx:'Pulgones por planta vs. días',x:[0,20],y:[0,500],xl:'t (días)',yl:'pulgones',p:{y0:[1,100,1,20,'y₀ (inicial)'],r:[-0.3,0.4,0.01,0.15,'r (tasa relativa)']},fn:(x,p)=>p.y0*Math.exp(p.r*x)},
+  logi:{nm:'Logística',f:'y = K / (1 + B·e^{−r·t}),  B = (K − y₀)/y₀',ctx:'Incidencia de enfermedad (%) vs. meses',x:[0,12],y:[0,110],xl:'t (meses)',yl:'incidencia (%)',p:{K:[20,100,1,100,'K (capacidad)'],y0:[0.5,20,0.5,2,'y₀ (inicial)'],r:[0.1,1.5,0.01,0.6,'r (tasa)']},fn:(x,p)=>p.K/(1+((p.K-p.y0)/p.y0)*Math.exp(-p.r*x))},
+  cr:{nm:'Chapman-Richards',f:'y = A·(1 − e^{−k·t})^c',ctx:'Altura de un rodal (m) vs. edad (años)',x:[0,60],y:[0,45],xl:'edad (años)',yl:'altura (m)',p:{A:[10,45,0.5,34,'A (asíntota)'],k:[0.01,0.2,0.001,0.06,'k (tasa)'],c:[0.5,4,0.05,1.6,'c (forma)']},fn:(x,p)=>p.A*Math.pow(1-Math.exp(-p.k*x),p.c)}
+};
+let fam='lineal', famP={};
+Object.entries(FAM).forEach(([k,F])=>{ famP[k]={}; Object.entries(F.p).forEach(([n,a])=>famP[k][n]=a[3]); });
+function buildFam(){
+  $('#famTabs').innerHTML = Object.entries(FAM).map(([k,F])=>`<button class="${k===fam?'on':''}" data-fam="${k}">${F.nm}</button>`).join('');
+  $$('#famTabs button').forEach(b=>b.onclick=()=>{ fam=b.dataset.fam; buildFam(); });
+  const F=FAM[fam]; $('#famInfo').innerHTML = `<span class="m" style="color:var(--text);font-size:19px">${mathify(F.f)}</span> · Contexto: ${F.ctx}`;
+  $('#famCtrls').innerHTML = Object.entries(F.p).map(([n,a])=>`<label>${mathify(a[4])}: <b id="fv_${n}">${famP[fam][n]}</b><input type="range" min="${a[0]}" max="${a[1]}" step="${a[2]}" value="${famP[fam][n]}" data-p="${n}"></label>`).join('');
+  $$('#famCtrls input').forEach(inp=>inp.oninput=()=>{ famP[fam][inp.dataset.p]=+inp.value; $('#fv_'+inp.dataset.p).textContent=inp.value; drawExplorer(); });
+  drawExplorer();
+}
+function drawExplorer(){ const F=FAM[fam], p=famP[fam]; const cv=$('#cvExplorer'); if(!cv.offsetParent) return;
+  plot(cv,{x0:F.x[0],x1:F.x[1],y0:F.y[0],y1:F.y[1],xl:F.xl,yl:F.yl,series:[{fn:x=>F.fn(x,p),color:COL.log,width:3}]}); }
+
+/* ---- Roya ---- */
+$('#tabRoya').innerHTML = `<tr><th>Mes</th>${ROYA.meses.map(m=>`<th class="num">${m}</th>`).join('')}</tr><tr><td>t (meses)</td>${ROYA.y.map((_,i)=>`<td class="num">${i}</td>`).join('')}</tr><tr><td>Incidencia y (%)</td>${ROYA.y.map(v=>`<td class="num">${fmt(v,1)}</td>`).join('')}</tr>`;
+const sse = r=> ROYA.y.reduce((s,y,t)=>s+(logis(t,2,r)-y)**2,0);
+function royaOpts(light){
+  const K=light?COLL:COL, s=[];
+  const rS = S.res.r2 ? parseNum(S.res.r2.val) : null;
+  if (rS && isFinite(rS)) s.push({fn:t=>2*Math.exp(rS*t),color:K.exp,dash:[7,5],label:`Exponencial (r = ${fmt(rS,3)})`});
+  s.push({fn:t=>logis(t,2,S.rr),color:K.log,label:`Logística (r = ${fmt(S.rr,2)})`});
+  s.push({hline:10,color:K.ref,dash:[3,4],width:1.5,label:'Umbral 10 %'});
+  s.push({pts:ROYA.y.map((y,t)=>[t,y]),color:K.data,label:'Datos de campo'});
+  return {x0:0,x1:8,y0:0,y1:110,xstep:1,xl:'t (meses desde mayo)',yl:'incidencia (%)',xfmt:x=>ROYA.meses[x]||x,legendRight:false,series:s};
+}
+function drawRoya(){ const cv=$('#cvRoya'); if(!cv.offsetParent) return; plot(cv, royaOpts(false)); $('#sseRoya').textContent=fmt(sse(S.rr),1); }
+$('#slRr').value=S.rr; $('#lblRr').textContent=(+S.rr).toFixed(2);
+$('#slRr').oninput=e=>{ S.rr=+e.target.value; $('#lblRr').textContent=S.rr.toFixed(2); drawRoya(); save(); };
+function logitOpts(light){
+  const K=light?COLL:COL, pts=ROYA.y.map((y,t)=>[t,logit(y)]);
+  const have = S.res.r5 && S.res.r6 && (S.res.r5.ok||S.res.r5.closed) && (S.res.r6.ok||S.res.r6.closed);
+  const s=[{pts: have? pts : pts.filter(p=>p[0]!==2&&p[0]!==6), color:K.data, label:'logit de los datos'}];
+  if (have) { const r=(logit(43.5)-logit(6.5))/4, b=logit(6.5)-2*r; s.push({fn:t=>b+r*t,color:K.log,label:`Recta: pendiente r = ${fmt(r,3)}`}); s.push({pts:[[2,logit(6.5)],[6,logit(43.5)]],color:K.strat,r:7,label:'Tus dos puntos (jul, nov)'}); }
+  return {x0:0,x1:8,y0:-4.5,y1:1.5,xstep:1,ystep:1,xl:'t (meses desde mayo)',yl:'L = ln(y/(100−y))',xfmt:x=>ROYA.meses[x]||x,legendRight:false,series:s,have};
+}
+function drawLogit(){ const cv=$('#cvLogit'); if(!cv.offsetParent) return; const o=logitOpts(false); plot(cv,o); $('#logitNote').textContent = o.have? 'Los puntos se alinean: la transformación logit convierte la curva logística en una recta.' : 'Completa los ejercicios de logit de julio y noviembre para ver la recta.'; }
+/* ---- Simulador ---- */
+function simOpts(light){
+  const K=light?COLL:COL, {y0,r,u}=S.sim;
+  return {x0:0,x1:12,y0:0,y1:105,xstep:1,xl:'t (meses desde mayo)',yl:'incidencia (%)',legendRight:false,series:[
+    {fn:t=>logis(t,2,0.6),color:K.ref,width:2,label:'Referencia (y₀ = 2 %, r = 0.6)'.replace('₀','0')},
+    {fn:t=>logis(t,y0,r),color:K.strat,width:3,label:`Estrategia (y0 = ${fmt(y0,1)} %, r = ${fmt(r,2)})`},
+    {hline:u,color:K.exp,dash:[5,4],width:1.5,label:`Umbral ${u} %`},
+    {vline:tUmbral(2,0.6,u),color:K.ref,dash:[2,4],width:1.2},{vline:tUmbral(y0,r,u),color:K.strat,dash:[2,4],width:1.2}]};
+}
+function drawSim(){
+  const {y0,r,u}=S.sim, cv=$('#cvSim'); $('#lblY0').textContent=fmt(y0,1); $('#lblR').textContent=fmt(r,2); $('#lblU').textContent=u;
+  const tR=tUmbral(2,0.6,u), tE=tUmbral(y0,r,u);
+  $('#simOut').innerHTML = `<span>Referencia alcanza ${u} % en t = <b>${fmt(tR,2)}</b> meses</span><span>Estrategia: t = <b>${tE>0?fmt(tE,2):'ya superado'}</b> meses</span><span>Tiempo ganado: <b>${fmt(tE-tR,2)}</b> meses</span><span>Incidencia en enero (t = 8): ref. <b>${fmt(logis(8,2,0.6),1)} %</b> · estrategia <b>${fmt(logis(8,y0,r),1)} %</b></span>`;
+  if(cv.offsetParent) plot(cv, simOpts(false));
+}
+['Y0','R','U'].forEach(k=>{ const el=$('#sl'+k), key={Y0:'y0',R:'r',U:'u'}[k]; el.value=S.sim[key]; el.oninput=()=>{ S.sim[key]=+el.value; drawSim(); save(); }; });
+
+/* ---- Forestal ---- */
+$('#tabAltura').innerHTML = `<tr><th>Edad t (años)</th>${ALT.t.map(t=>`<th class="num">${t}</th>`).join('')}</tr><tr><td>Altura dominante (m)</td>${ALT.h.map(v=>`<td class="num">${fmt(v,1)}</td>`).join('')}</tr>`;
+function altOpts(light){ const K=light?COLL:COL, f=S.res.b1&&S.res.b1.fit&&light? S.res.b1.fit : S.slFit;
+  return {x0:0,x1:50,y0:0,y1:40,xl:'edad (años)',yl:'altura dominante (m)',legendRight:false,series:[
+    {fn:t=>H(t),color:K.ref,dash:[6,5],width:1.6,label:'Modelo de referencia'},
+    {fn:t=>CR(t,f.A,f.k,f.c),color:K.pine,width:3,label:`Ajuste del estudiante (A=${fmt(f.A,1)}, k=${fmt(f.k,3)}, c=${fmt(f.c,2)})`},
+    {pts:ALT.t.map((t,i)=>[t,ALT.h[i]]),color:K.data,label:'Análisis troncal'}]};
+}
+function drawAlt(){ const {A,k,c}=S.slFit; $('#lblA').textContent=fmt(A,1); $('#lblK').textContent=fmt(k,3); $('#lblC').textContent=fmt(c,2);
+  const e=rmse(A,k,c); $('#rmseOut').textContent=fmt(e,3); $('#rmseOut').style.color = e<=0.8?'var(--mint)':'var(--gold)'; $('#h20Out').textContent=fmt(CR(20,A,k,c),2);
+  const cv=$('#cvAltura'); if(cv.offsetParent){ const o=altOpts(false); o.series[0].hide=true; o.series.shift(); plot(cv,o); } }
+['A','K','C'].forEach(k=>{ const el=$('#sl'+k), key=k.toLowerCase()==='a'?'A':k.toLowerCase(); el.value=S.slFit[key]; el.oninput=()=>{ S.slFit[key]=+el.value; drawAlt(); save(); }; });
+(function tablaVol(){
+  const ages=[5,10,15,20,25,30,35,40];
+  const cell=(t,kind)=>{ if (t===30 && kind==='V') return '<td class="hl">?</td>'; if (t===30 && kind==='IMA') return '<td class="hl">?</td>'; if (t===30 && kind==='ICA') return '<td class="hl">?</td>';
+    const v = kind==='V'? V(t) : kind==='IMA'? V(t)/t : (V(t)-V(t-5))/5; return `<td class="num">${fmt(v,kind==='V'?1:2)}</td>`; };
+  $('#tabVol').innerHTML = `<tr><th>Edad (años)</th>${ages.map(t=>`<th class="num">${t}</th>`).join('')}</tr>
+   <tr><td>V(t) (m³/ha)</td>${ages.map(t=>cell(t,'V')).join('')}</tr>
+   <tr><td>IMA (m³/ha/año)</td>${ages.map(t=>cell(t,'IMA')).join('')}</tr>
+   <tr><td>ICA del quinquenio (m³/ha/año)</td>${ages.map(t=>cell(t,'ICA')).join('')}</tr>`;
+})();
+function imaOpts(light){ const K=light?COLL:COL; const s=[
+  {fn:t=>V(t)-V(t-1),from:1,color:K.pine,width:3,label:'ICA anual = V(t) − V(t−1)'},
+  {fn:t=>V(t)/t,from:1,color:K.gold,width:3,label:'IMA = V(t)/t'}];
+  const tS = S.res.b7? parseNum(S.res.b7.val):null; if (tS && isFinite(tS)) s.push({vline:tS,color:K.strat,dash:[5,4],width:1.6,label:`Turno elegido: ${tS} años`});
+  return {x0:0,x1:60,y0:0,y1:30,xl:'edad (años)',yl:'m³/ha/año',series:s}; }
+let imaMap=null;
+function drawIMA(){ const cv=$('#cvIMA'); if(!cv.offsetParent) return; imaMap=plot(cv, imaOpts(false)); }
+$('#cvIMA').addEventListener('mousemove', ev=>{ if(!imaMap) return; const rect=ev.target.getBoundingClientRect(); const t=Math.round(imaMap.inv(ev.clientX-rect.left)); if(t<1||t>60) return;
+  $('#imaHover').innerHTML=`<span>Edad: <b>${t}</b> años</span><span>V = <b>${fmt(V(t),1)}</b> m³/ha</span><span>IMA = <b>${fmt(V(t)/t,2)}</b></span><span>ICA anual = <b>${fmt(V(t)-V(t-1),2)}</b></span>`; });
+
+function drawAll(){ drawExplorer(); drawRoya(); drawLogit(); drawSim(); drawAlt(); drawIMA(); }
+window.addEventListener('resize', ()=>{ clearTimeout(window._rz); window._rz=setTimeout(drawAll,120); });
+
+/* ================= Reporte ================= */
+function updateReport(){
+  const T=totalPts(), E=earned(), A=autoPts();
+  const ids=Object.keys(EX), done=ids.filter(isDone).length, pend=ids.filter(id=>EX[id].tipo==='text');
+  const items = [
+    [!!(S.nombre&&S.matricula), `Registro: ${S.nombre||'—'} · ${S.matricula||'—'}`],
+    ...[1,2,3,4,5,6].map(s=>{ const xs=ids.filter(id=>EX[id].sec===s), n=xs.filter(isDone).length; return [n===xs.length, `${SECS[s]}: ${n}/${xs.length} ejercicios`]; })
+  ];
+  $('#checklist').innerHTML = items.map(([ok,t])=>`<li class="${ok?'ok':''}">${esc(t)}</li>`).join('');
+  $('#resumen').innerHTML = `<p>Ejercicios completados: <b>${done} de ${ids.length}</b></p><p>Puntos autocalificados: <b>${fmt(E,2)} de ${fmt(A,1)}</b></p><p>Preguntas abiertas para el docente: <b>${pend.length}</b> (${fmt(T-A,1)} pts)</p><p>Tiempo de trabajo registrado: <b>${Math.round(S.secs/60)} min</b></p>`;
+}
+const LOGO={};
+function loadLogo(k, src){ return new Promise(res=>{ const im=new Image(); im.onload=()=>{ const c=document.createElement('canvas'); c.width=im.naturalWidth; c.height=im.naturalHeight; const x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(im,0,0); try{ LOGO[k]={src:c.toDataURL('image/jpeg',0.92),w:c.width,h:c.height}; }catch(e){} res(); }; im.onerror=()=>res(); im.src=src; }); }
+loadLogo('uv','logos/uv.jpg');
+function figImg(optsFn){ const c=document.createElement('canvas'); plot(c, optsFn(true), true, 1100, 560); return {src:c.toDataURL('image/png'), w:1100, h:560}; }
+const pdfSafe = s=> String(s??'').replace(/[−–—]/g,'-').replace(/[“”«»]/g,'"').replace(/[‘’]/g,"'").replace(/…/g,'...').replace(/≈\s?/g,'aprox. ').replace(/≤/g,'<=').replace(/≥/g,'>=').replace(/→/g,'->').replace(/×/g,'x').replace(/₀/g,'0').replace(/·/g,'·').replace(/[   ]/g,' ').replace(/³/g,'3').replace(/²/g,'2').replace(/[^\x09\x0A\x20-\x7E¡-ÿ]/g,'');
+function respTexto(id){
+  const e=EX[id], r=S.res[id]; if(!r||r.val===undefined||r.val===null) return 'Sin responder';
+  if (e.tipo==='num') return `${r.val} ${e.unit||''}`.trim();
+  if (e.tipo==='mc') return `${String.fromCharCode(97+r.val)}) ${e.opts[r.val]}`;
+  if (e.tipo==='match') return r.val.map((x,i)=>`${i+1}->${x===null?'-':e.choices[x]}`).join('; ');
+  if (e.tipo==='fit') return r.fit? `A=${fmt(r.fit.A,1)}, k=${fmt(r.fit.k,3)}, c=${fmt(r.fit.c,2)}; RMSE=${fmt(r.fit.rmse,3)} m` : 'Sin registrar';
+  return r.val;
+}
+function estado(id){ const r=S.res[id], e=EX[id]; if(!r) return 'Pendiente'; if(e.tipo==='text') return r.val?'Revisión docente':'Pendiente'; if(r.ok) return r.tries===1?'Correcto':'Correcto (2o intento)'; if(r.closed) return 'Incorrecto'; return `En proceso (${r.tries} int.)`; }
+function generarPDF(){
+  if (!S.nombre || !S.matricula){ toast('Registra tu nombre y matrícula en Inicio.'); return; }
+  if (!window.jspdf){ toast('No se pudo cargar el generador de PDF. Revisa tu conexión y recarga.',6000); return; }
+  $('#btnPDF').disabled=true; $('#pdfMsg').textContent='Generando…';
+  setTimeout(()=>{ try{ construirPDF(); $('#pdfMsg').textContent='Reporte generado ✓. Revisa tus descargas.'; }catch(err){ console.error(err); $('#pdfMsg').textContent='Error: '+err.message; } finally { $('#btnPDF').disabled=false; } },30);
+}
+$('#btnPDF').onclick=generarPDF;
+$('#btnReset').onclick=()=>{ if (confirm('¿Borrar todo tu avance en este navegador? No se puede deshacer.')) { try{localStorage.removeItem(KEY);}catch(e){} location.reload(); } };
+function construirPDF(){
+  const {jsPDF}=window.jspdf, doc=new jsPDF({unit:'mm',format:'a4',compress:true});
+  const PW=210, PH=297, M=16, CW=PW-2*M, TOP=22, BOT=PH-16;
+  const OSC=[16,46,61], MENTA=[15,159,116], TXT=[27,36,48], GRIS=[95,106,120], CAFE=[150,90,40];
+  let y=TOP, fig=0;
+  const F=(est='normal',tam=10,col=TXT)=>{ doc.setFont('helvetica',est); doc.setFontSize(tam); doc.setTextColor(...col); };
+  const newPage=()=>{ doc.addPage(); y=TOP; };
+  const space=h=>{ if (y+h>BOT) newPage(); };
+  const para=(t,o={})=>{ const tam=o.tam||10, lh=tam*0.46; F(o.est||'normal',tam,o.col||TXT); pdfSafe(t).split('\n').forEach(p=>{ doc.splitTextToSize(p, (o.w||CW)-(o.ind||0)).forEach(l=>{ space(lh+0.5); doc.text(l, M+(o.ind||0), y); y+=lh; }); }); y+=o.after??2; };
+  const section=(t)=>{ space(24); y+=2; F('bold',14,OSC); doc.text(pdfSafe(t),M,y); doc.setDrawColor(...MENTA); doc.setLineWidth(0.8); doc.line(M,y+2,M+18,y+2); y+=8; };
+  const figure=(img,cap)=>{ const w=CW, h=img.h*w/img.w; space(h+12); doc.addImage(img.src,'PNG',M,y,w,h,undefined,'FAST'); doc.setDrawColor(210,215,222); doc.setLineWidth(0.2); doc.rect(M,y,w,h); y+=h+4; fig++; F('normal',8.8,GRIS); doc.splitTextToSize(pdfSafe(`Figura ${fig}. ${cap}`),CW).forEach(l=>{doc.text(l,M,y);y+=3.8;}); y+=3; };
+  const T=totalPts(), E=earned(), A=autoPts(), ids=Object.keys(EX);
+  const fecha=new Date().toLocaleString('es-MX',{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+
+  /* Portada */
+  if (LOGO.uv){ const h=24, w=LOGO.uv.w*h/LOGO.uv.h; doc.addImage(LOGO.uv.src,'JPEG',M,8,w,h,undefined,'FAST'); }
+  F('bold',11,OSC); doc.text('UNIVERSIDAD VERACRUZANA',PW-M,15,{align:'right'});
+  F('normal',9.5,GRIS); doc.text('Ingeniería en Agronomía',PW-M,20.5,{align:'right'}); doc.text(pdfSafe(`Experiencia educativa: ${EE}`),PW-M,25.5,{align:'right'});
+  doc.setFillColor(...OSC); doc.rect(0,38,PW,70,'F'); doc.setFillColor(...MENTA); doc.rect(0,108,PW,2.2,'F');
+  F('bold',9.5,[168,232,210]); doc.text('REPORTE DE CLASE INTERACTIVA · EE MATEMÁTICAS',M,52);
+  F('bold',26,[255,255,255]); doc.text('Funciones y Modelado',M,68); doc.text('de Funciones',M,79);
+  F('normal',11.5,[220,234,245]); doc.text(pdfSafe('Casos: roya del cafeto (Coatepec, Ver.) y plantación de Pinus patula (Zacualpan, Ver.)'),M,95);
+  y=124;
+  const campo=(k,v,tam=13)=>{ F('bold',9,MENTA); doc.text(k,M,y); y+=6; F('bold',tam,TXT); const l=doc.splitTextToSize(pdfSafe(v),CW); doc.text(l,M,y); y+=l.length*tam*0.45+5; };
+  campo('ESTUDIANTE', S.nombre, 17); campo('MATRÍCULA', S.matricula, 15);
+  campo('DOCENTE', DOCENTE, 12); campo('EXPERIENCIA EDUCATIVA', `${EE} · Tema: ${TEMA}`, 12); campo('FECHA DE GENERACIÓN', fecha, 11);
+  y+=4; doc.setFillColor(236,246,242); doc.roundedRect(M,y,CW,44,3,3,'F');
+  F('bold',10,OSC); doc.text('RESUMEN',M+6,y+8);
+  const nDone=ids.filter(isDone).length;
+  F('normal',10.5,TXT);
+  doc.text(pdfSafe(`Ejercicios completados: ${nDone} de ${ids.length}`),M+6,y+16);
+  doc.text(pdfSafe(`Puntos autocalificados: ${fmt(E,2)} de ${fmt(A,1)}   ·   Preguntas abiertas (docente): ${fmt(T-A,1)} pts`),M+6,y+23);
+  doc.text(pdfSafe(`Calificación preliminar (sin abiertas): ${fmt(10*E/A,1)} / 10`),M+6,y+30);
+  doc.text(pdfSafe(`Tiempo de trabajo registrado: ${Math.round(S.secs/60)} min`),M+6,y+37);
+
+  /* Respuestas por sección */
+  newPage();
+  [1,2,3,4,5,6].forEach(s=>{
+    section(`${s}. ${SECS[s]}`);
+    ids.filter(id=>EX[id].sec===s).forEach(id=>{
+      const e=EX[id], r=S.res[id]||{}, st=estado(id);
+      space(20);
+      F('bold',10,OSC); const head=`Ejercicio ${e.n} (${fmt(e.pts,e.pts%1?1:0)} pts)`; doc.text(pdfSafe(head),M,y);
+      const col = st.startsWith('Correcto')?MENTA : st==='Incorrecto'?[200,60,60] : st==='Revisión docente'?[37,99,235] : GRIS;
+      F('bold',9.5,col); doc.text(pdfSafe(`${st}${e.tipo!=='text'&&r.pts!==undefined?` · ${fmt(r.pts||0,2)} pts`:''}`),PW-M,y,{align:'right'}); y+=4.8;
+      para(e.enun.replace(/\^\{([^}]+)\}/g,'^($1)'),{tam:9.5,col:GRIS,after:1});
+      if (e.tipo==='text'){ para(respTexto(id),{tam:10,est:'italic',ind:4,after:3}); }
+      else { para('Respuesta: '+respTexto(id),{tam:10,ind:4,after: (r.closed||(r.ok&&e.tipo!=='fit'))?1:3});
+        if ((r.closed || r.ok) && e.exp && e.tipo!=='text') para('Solución: '+e.exp.replace(/\^\{([^}]+)\}/g,'^($1)'),{tam:8.8,col:[90,100,110],ind:4,after:3}); }
+    });
+    if (s===4){ figure(figImg(royaOpts),'Datos de incidencia de roya, modelo exponencial con la tasa calculada por el estudiante y curva logística con el r elegido en el deslizador.');
+      figure(figImg(logitOpts),'Linealización logit de los datos de incidencia; la pendiente es la tasa aparente de infección r.');
+      figure(figImg(simOpts),`Simulador de manejo: última estrategia explorada por el estudiante (y0 = ${fmt(S.sim.y0,1)} %, r = ${fmt(S.sim.r,2)}, umbral ${S.sim.u} %) frente a la epidemia de referencia.`); }
+    if (s===5){ figure(figImg(altOpts),'Ajuste del modelo de Chapman-Richards de altura dominante realizado por el estudiante, frente a los datos y al modelo de referencia.');
+      figure(figImg(imaOpts),'Incremento corriente anual (ICA) e incremento medio anual (IMA) del volumen; el turno técnico está en el máximo del IMA.'); }
+  });
+  /* Pie de página */
+  const n=doc.getNumberOfPages();
+  for (let i=1;i<=n;i++){ doc.setPage(i); F('normal',8,GRIS); doc.setDrawColor(220,225,230); doc.setLineWidth(0.2); doc.line(M,PH-11,PW-M,PH-11);
+    doc.text(pdfSafe(`${S.nombre} · ${S.matricula} · ${TEMA}`),M,PH-7); doc.text(`Página ${i} de ${n}`,PW-M,PH-7,{align:'right'}); }
+  doc.save(pdfSafe(`FuncionesModelado_${S.matricula}.pdf`).replace(/[^\w.\-]/g,'_'));
+}
+
+/* ================= Inicio ================= */
+$$('.ex').forEach(renderEx);
+buildNav(); buildFam(); updWho(); after(); go(S.lesson||0); drawSim();
+</script>
+</body>
+</html>

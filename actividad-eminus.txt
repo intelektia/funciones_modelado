@@ -1,0 +1,17 @@
+ACTIVIDAD. Funciones y Modelado de Funciones
+EE Matemáticas · Ingeniería en Agronomía · Docente: Dr. Gustavo Ortiz Hernández
+
+Propósito: reconocer funciones, distinguir las principales familias de funciones y aplicarlas para modelar la epidemia de roya del cafeto y el crecimiento de una plantación de Pinus patula.
+Modalidad: individual. Tiempo aproximado: 60 minutos. Necesitas una calculadora con ln y e^x.
+
+Clase interactiva: https://intelektia.github.io/funciones_modelado/
+
+Procedimiento:
+1. Abre la clase y registra tu nombre completo y tu matrícula.
+2. Recorre las secciones 1 a 6 en orden y resuelve cada ejercicio. Tienes 2 intentos por ejercicio.
+3. Responde con tus palabras las preguntas abiertas (recomendación técnica sobre la roya, decisión de corta y reflexión final).
+4. En la sección 8 descarga tu reporte PDF (FuncionesModelado_<matrícula>.pdf).
+
+Entrega en Eminus 4: adjunta el PDF en «Adjuntar evidencias» y pulsa «Entregar actividad».
+
+Evaluación: ejercicios autocorregidos 33 pts y preguntas abiertas 4.5 pts (las califica el docente), escalado a 10.
