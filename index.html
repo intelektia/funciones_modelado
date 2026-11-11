@@ -128,7 +128,7 @@ canvas.plot{width:100%;height:360px;display:block}
 <body>
 <header>
   <div style="display:flex;align-items:center;gap:10px"><button id="menuBtn" class="secondary" aria-label="Menú">☰</button><strong>FUNCIONES Y MODELADO · MATEMÁTICAS UV</strong></div>
-  <div class="right"><span class="hide-s" id="whoChip">Sin registrar</span><span id="scoreBadge">0 / 0 pts</span></div>
+  <div class="right"><span class="hide-s" id="whoChip">Sin registrar</span><span id="scoreBadge">0 / 0 ejercicios</span></div>
 </header>
 <nav id="nav"><div id="progress"><i></i></div><div id="navList"></div></nav>
 <main id="main">
@@ -173,7 +173,7 @@ canvas.plot{width:100%;height:360px;display:block}
       <tr><td>7–8. Referencias y reporte PDF</td><td class="num">2 min</td></tr>
     </table></article>
   </div>
-  <div class="callout info"><b>Cómo funciona.</b> Cada ejercicio se corrige al pulsar <span class="m">Comprobar</span>. Tienes <b>2 intentos</b>: si aciertas al primero obtienes todos los puntos; al segundo, la mitad; después verás la solución explicada. Las preguntas abiertas las califica el docente. Usa punto o coma decimal. Ten a mano una calculadora (o la de tu celular) con <span class="m">ln</span> y <span class="m">e<sup>x</sup></span>.</div>
+  <div class="callout info"><b>Cómo funciona.</b> Cada ejercicio se corrige al pulsar <span class="m">Comprobar</span>. Tienes <b>2 intentos</b>: si no aciertas, recibirás una pista; después del segundo intento verás la solución explicada. Las preguntas abiertas las revisa el docente. Usa punto o coma decimal. Ten a mano una calculadora (o la de tu celular) con <span class="m">ln</span> y <span class="m">e<sup>x</sup></span>.</div>
 </section>
 
 <!-- ===================== 1. FUNCIONES ===================== -->
@@ -413,7 +413,7 @@ canvas.plot{width:100%;height:360px;display:block}
 <section class="lesson" data-title="8. Reporte PDF" data-min="1">
   <div class="eyebrow">Sección 8</div>
   <h1>Genera tu reporte para Eminus 4</h1>
-  <p class="lead">El PDF incluye portada con tus datos, todas tus respuestas con su resultado, tus gráficas (ajuste de roya, simulador y ajuste forestal), tus respuestas abiertas y tu puntaje.</p>
+  <p class="lead">El PDF incluye portada con tus datos, todas tus respuestas con su resultado, tus gráficas (ajuste de roya, simulador y ajuste forestal) y tus respuestas abiertas.</p>
   <div class="grid2">
     <article><h3>Lista de verificación</h3><ul class="check" id="checklist"></ul></article>
     <article><h3>Resumen</h3><div id="resumen"></div></article>
@@ -552,7 +552,7 @@ const mathify = s=> esc(s).replace(/\^\{([^}]+)\}/g,'<sup>$1</sup>').replace(/\^
 let exNum = 0;
 function renderEx(box){
   const id=box.dataset.id, e=EX[id]; exNum++; e.n=exNum;
-  let h = `<div class="tag"><span>Ejercicio ${exNum}${e.tipo==='text'?' · respuesta abierta':''}</span><span class="pts">${fmt(e.pts,e.pts%1?1:0)} pts</span></div><div class="enun">${mathify(e.enun)}</div>`;
+  let h = `<div class="tag"><span>Ejercicio ${exNum}${e.tipo==='text'?' · respuesta abierta':''}</span></div><div class="enun">${mathify(e.enun)}</div>`;
   if (e.tipo==='num') h += `<div class="row"><input type="text" inputmode="decimal" id="in_${id}" aria-label="Respuesta"> <span class="unit">${esc(e.unit||'')}</span><button data-check="${id}">Comprobar</button></div>`;
   if (e.tipo==='mc') h += `<div class="opts">${e.opts.map((o,i)=>`<label><input type="radio" name="in_${id}" value="${i}">${mathify(o)}</label>`).join('')}</div><button data-check="${id}">Comprobar</button>`;
   if (e.tipo==='match') h += `<div class="items">${e.items.map((it,i)=>`<div>${mathify(it)}</div><select id="in_${id}_${i}"><option value="">— elige —</option>${e.choices.map((c,j)=>`<option value="${j}">${esc(c)}</option>`).join('')}</select>`).join('')}</div><button data-check="${id}">Comprobar</button>`;
@@ -594,7 +594,7 @@ function check(id){
   if (e.tipo==='fit') { r.fit = v; }
   if (g.ok){
     r.ok=true; r.pts = r.tries===1 ? e.pts : e.pts/2;
-    fb.className='fb ok'; fb.innerHTML = `<b>¡Correcto!</b> ${r.tries>1?'(segundo intento, mitad de puntos) ':''}${e.exp? mathify(e.exp):''}${e.tipo==='fit'?` RMSE = ${fmt(v.rmse,3)} m con A = ${fmt(v.A,1)}, k = ${fmt(v.k,3)}, c = ${fmt(v.c,2)}.`:''}`;
+    fb.className='fb ok'; fb.innerHTML = `<b>¡Correcto!</b> ${r.tries>1?'(segundo intento) ':''}${e.exp? mathify(e.exp):''}${e.tipo==='fit'?` RMSE = ${fmt(v.rmse,3)} m con A = ${fmt(v.A,1)}, k = ${fmt(v.k,3)}, c = ${fmt(v.c,2)}.`:''}`;
   } else if (r.tries < 2 && e.tipo!=='fit'){
     fb.className='fb bad'; fb.innerHTML = `<b>Aún no.</b> ${g.k!==undefined?`Tienes ${g.k} de ${e.ans.length} bien. `:''}Pista: ${mathify(e.hint||'revisa tu procedimiento.')} Te queda 1 intento.`;
   } else if (e.tipo==='fit'){
@@ -602,7 +602,7 @@ function check(id){
     if (r.tries>=4) { r.pts=0; }
   } else {
     r.closed=true; r.pts = (e.tipo==='match' && g.frac) ? Math.round(e.pts*g.frac*0.5*100)/100 : 0;
-    fb.className='fb sol'; fb.innerHTML = `<b>Solución:</b> ${mathify(e.exp)}${e.tipo==='mc'?` Respuesta correcta: «${mathify(e.opts[e.ans])}».`:''}${r.pts?` (Obtienes ${fmt(r.pts,2)} pts por respuestas parciales.)`:''}`;
+    fb.className='fb sol'; fb.innerHTML = `<b>Solución:</b> ${mathify(e.exp)}${e.tipo==='mc'?` Respuesta correcta: «${mathify(e.opts[e.ans])}».`:''}`;
   }
   S.res[id]=r; if (r.ok) box.classList.add('done'); else if (r.closed) box.classList.add('fail');
   if (r.ok||r.closed) lockEx(id);
@@ -641,7 +641,7 @@ $('#menuBtn').onclick=()=>$('#nav').classList.toggle('open');
 function after(){
   save();
   const T=totalPts(), E=earned();
-  $('#scoreBadge').textContent = `${fmt(E,1)} / ${fmt(T,0)} pts`;
+  $('#scoreBadge').textContent = `${Object.keys(EX).filter(isDone).length} / ${Object.keys(EX).length} ejercicios`;
   const ids=Object.keys(EX), done=ids.filter(isDone).length;
   $('#progress i').style.width = (100*done/ids.length)+'%';
   lessons.forEach((l,i)=>{ const exs=[...l.querySelectorAll('.ex')].map(x=>x.dataset.id); const d=$('#dot'+i); if(!d) return;
@@ -816,7 +816,8 @@ function updateReport(){
     ...[1,2,3,4,5,6].map(s=>{ const xs=ids.filter(id=>EX[id].sec===s), n=xs.filter(isDone).length; return [n===xs.length, `${SECS[s]}: ${n}/${xs.length} ejercicios`]; })
   ];
   $('#checklist').innerHTML = items.map(([ok,t])=>`<li class="${ok?'ok':''}">${esc(t)}</li>`).join('');
-  $('#resumen').innerHTML = `<p>Ejercicios completados: <b>${done} de ${ids.length}</b></p><p>Puntos autocalificados: <b>${fmt(E,2)} de ${fmt(A,1)}</b></p><p>Preguntas abiertas para el docente: <b>${pend.length}</b> (${fmt(T-A,1)} pts)</p><p>Tiempo de trabajo registrado: <b>${Math.round(S.secs/60)} min</b></p>`;
+  const ok1=ids.filter(id=>S.res[id]&&S.res[id].ok&&S.res[id].tries===1).length, ok2=ids.filter(id=>S.res[id]&&S.res[id].ok&&S.res[id].tries>1).length, mal=ids.filter(id=>S.res[id]&&S.res[id].closed).length;
+  $('#resumen').innerHTML = `<p>Ejercicios completados: <b>${done} de ${ids.length}</b></p><p>Correctos al primer intento: <b>${ok1}</b> · al segundo: <b>${ok2}</b> · con solución mostrada: <b>${mal}</b></p><p>Preguntas abiertas para el docente: <b>${pend.length}</b></p><p>Tiempo de trabajo registrado: <b>${Math.round(S.secs/60)} min</b></p>`;
 }
 const LOGO={};
 function loadLogo(k, src){ return new Promise(res=>{ const im=new Image(); im.onload=()=>{ const c=document.createElement('canvas'); c.width=im.naturalWidth; c.height=im.naturalHeight; const x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(im,0,0); try{ LOGO[k]={src:c.toDataURL('image/jpeg',0.92),w:c.width,h:c.height}; }catch(e){} res(); }; im.onerror=()=>res(); im.src=src; }); }
@@ -871,8 +872,9 @@ function construirPDF(){
   const nDone=ids.filter(isDone).length;
   F('normal',10.5,TXT);
   doc.text(pdfSafe(`Ejercicios completados: ${nDone} de ${ids.length}`),M+6,y+16);
-  doc.text(pdfSafe(`Puntos autocalificados: ${fmt(E,2)} de ${fmt(A,1)}   ·   Preguntas abiertas (docente): ${fmt(T-A,1)} pts`),M+6,y+23);
-  doc.text(pdfSafe(`Calificación preliminar (sin abiertas): ${fmt(10*E/A,1)} / 10`),M+6,y+30);
+  const ok1=ids.filter(id=>S.res[id]&&S.res[id].ok&&S.res[id].tries===1).length, ok2=ids.filter(id=>S.res[id]&&S.res[id].ok&&S.res[id].tries>1).length, mal=ids.filter(id=>S.res[id]&&S.res[id].closed).length;
+  doc.text(pdfSafe(`Correctos al primer intento: ${ok1}   ·   al segundo intento: ${ok2}   ·   con solución mostrada: ${mal}`),M+6,y+23);
+  doc.text(pdfSafe(`Preguntas abiertas para revisión del docente: ${ids.filter(id=>EX[id].tipo==='text').length}`),M+6,y+30);
   doc.text(pdfSafe(`Tiempo de trabajo registrado: ${Math.round(S.secs/60)} min`),M+6,y+37);
 
   /* Respuestas por sección */
@@ -882,9 +884,9 @@ function construirPDF(){
     ids.filter(id=>EX[id].sec===s).forEach(id=>{
       const e=EX[id], r=S.res[id]||{}, st=estado(id);
       space(20);
-      F('bold',10,OSC); const head=`Ejercicio ${e.n} (${fmt(e.pts,e.pts%1?1:0)} pts)`; doc.text(pdfSafe(head),M,y);
+      F('bold',10,OSC); const head=`Ejercicio ${e.n}`; doc.text(pdfSafe(head),M,y);
       const col = st.startsWith('Correcto')?MENTA : st==='Incorrecto'?[200,60,60] : st==='Revisión docente'?[37,99,235] : GRIS;
-      F('bold',9.5,col); doc.text(pdfSafe(`${st}${e.tipo!=='text'&&r.pts!==undefined?` · ${fmt(r.pts||0,2)} pts`:''}`),PW-M,y,{align:'right'}); y+=4.8;
+      F('bold',9.5,col); doc.text(pdfSafe(st),PW-M,y,{align:'right'}); y+=4.8;
       para(e.enun.replace(/\^\{([^}]+)\}/g,'^($1)'),{tam:9.5,col:GRIS,after:1});
       if (e.tipo==='text'){ para(respTexto(id),{tam:10,est:'italic',ind:4,after:3}); }
       else { para('Respuesta: '+respTexto(id),{tam:10,ind:4,after: (r.closed||(r.ok&&e.tipo!=='fit'))?1:3});
