@@ -90,6 +90,14 @@ details summary{cursor:pointer;font-weight:650}
 .ex.fail::after{content:'!';position:absolute;right:-10px;top:-10px;background:var(--gold);color:#3a2f17;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:800}
 .unit{color:var(--muted);font-size:14px}
 .counter{font-size:12px;color:var(--muted)}
+details.guia{background:#122a26;border:1px dashed #2f6a5c;border-radius:10px;padding:8px 14px;margin:6px 0 12px}
+details.guia summary{color:var(--mint);font-size:14px}
+details.guia ol,details.guia ul{margin:6px 0 4px;padding-left:22px}
+details.guia li{margin:3px 0;font-size:15px}
+.worked{background:#101f33;border:1px solid var(--line);border-radius:12px;padding:14px 20px;margin:16px 0}
+.worked h3{margin-top:4px;color:var(--gold)}
+.worked ol li{margin:4px 0}
+.calc{font-family:Consolas,monospace;background:#0b1626;border:1px solid var(--line);padding:1px 6px;border-radius:5px;font-size:.92em}
 /* Gráficas y controles */
 .plotbox{background:#0b1626;border:1px solid var(--line);border-radius:12px;padding:12px;margin:14px 0}
 canvas.plot{width:100%;height:360px;display:block}
@@ -198,6 +206,39 @@ canvas.plot{width:100%;height:360px;display:block}
   </div>
   <div class="callout"><b>Ejemplo guiado.</b> En un vivero forestal se mide una plántula de cedro rojo que al trasplantarse medía 4 cm y crece, en promedio, 1.5 cm por semana. Su altura (cm) en función del tiempo <span class="m">t</span> (semanas) es <span class="m">h(t) = 4 + 1.5t</span>. Entonces <span class="m">h(2) = 4 + 1.5·2 = 7 cm</span>. <i>Leer</i> <span class="m">h(2)</span> como «altura a las 2 semanas», no como multiplicación.</div>
   <div class="callout warn"><b>Prueba de la recta vertical.</b> Una gráfica representa una función si ninguna recta vertical la corta en más de un punto: a cada <span class="m">x</span> le corresponde un solo <span class="m">y</span>.</div>
+  <h2>Explicación paso a paso</h2>
+  <div class="grid2">
+    <article><h3>La función como una «máquina»</h3>
+      <p>Piensa en un sensor de humedad: le das un punto del terreno (entrada) y te devuelve <b>una</b> lectura (salida). Una función hace lo mismo: recibe un valor <span class="m">x</span>, aplica una regla y entrega un único valor <span class="m">y</span>.</p>
+      <p><b>¿Cuál es x y cuál es y?</b> Pregúntate «¿qué depende de qué?». La altura depende de la edad, el rendimiento depende de la dosis y la incidencia depende del tiempo. Lo que <i>controlas o transcurre</i> (dosis, tiempo, edad) suele ser <span class="m">x</span>, la variable independiente. Lo que <i>responde</i> es <span class="m">y</span>, la variable dependiente.</p>
+    </article>
+    <article><h3>¿Cómo sé si es función?</h3>
+      <p>Hazte una sola pregunta: <b>«si me dicen la entrada, ¿puedo dar una sola salida?»</b></p>
+      <ul>
+        <li><b>Sí es función:</b> «Lote → fecha de siembra», si cada lote se sembró un solo día.</li>
+        <li><b>No es función:</b> «Productor → parcelas que posee», si un productor tiene varias parcelas.</li>
+        <li>Varias entradas pueden compartir la misma salida (dos lotes sembrados el mismo día) y la relación <b>sigue siendo</b> función. Lo prohibido es que una entrada tenga dos salidas.</li>
+      </ul>
+    </article>
+  </div>
+  <div class="worked"><h3>Ejemplo resuelto: evaluar y despejar</h3>
+    <p>Un pasto crece según <span class="m">g(x) = 2 + 0.8x</span> (cm, con x en días).</p>
+    <ol>
+      <li><b>Evaluar</b> (conozco x y busco y): <span class="m">g(5) = 2 + 0.8·5 = 2 + 4 = 6 cm</span>. Primero se multiplica y después se suma.</li>
+      <li><b>Despejar</b> (conozco y y busco x): ¿cuándo mide 10 cm? Planteo <span class="m">2 + 0.8x = 10</span>. Resto 2 en ambos lados: <span class="m">0.8x = 8</span>. Divido entre 0.8: <span class="m">x = 10 días</span>.</li>
+      <li><b>Comprobar:</b> <span class="m">g(10) = 2 + 8 = 10</span> ✓.</li>
+      <li><b>Interpretar con unidades:</b> el 2 es la altura inicial (cm) y el 0.8 es lo que crece cada día (cm/día).</li>
+    </ol>
+  </div>
+  <div class="worked"><h3>Ejemplos de dominio y rango en el campo</h3>
+    <table>
+      <tr><th>Función</th><th>Dominio (entradas con sentido)</th><th>Rango (salidas posibles)</th></tr>
+      <tr><td>Incidencia de una enfermedad vs. tiempo</td><td>t ≥ 0 (meses de la temporada)</td><td>0 a 100 %</td></tr>
+      <tr><td>Rendimiento vs. dosis de N</td><td>0 a 300 kg N/ha (las dosis probadas)</td><td>valores positivos de t/ha</td></tr>
+      <tr><td>Altura de un árbol vs. edad</td><td>edades con datos, p. ej. 5 a 40 años</td><td>alturas positivas</td></tr>
+    </table>
+    <p>El <b>dominio matemático</b> es todo lo que la fórmula acepta. El <b>dominio práctico</b> es donde el modelo tiene datos que lo respaldan. En agronomía usamos el práctico.</p>
+  </div>
   <div class="ex" data-id="f1"></div>
   <div class="ex" data-id="f2"></div>
   <div class="ex" data-id="f3"></div>
@@ -220,6 +261,34 @@ canvas.plot{width:100%;height:360px;display:block}
     <tr><td>Logística</td><td class="m">y = K / (1 + B·e<sup>−rt</sup>)</td><td>Curva en «S» que se satura en K</td><td>Incidencia de roya; cobertura del dosel; población con capacidad de carga</td></tr>
     <tr><td>Chapman-Richards</td><td class="m">y = A(1 − e<sup>−kt</sup>)<sup>c</sup></td><td>Crecimiento sigmoide con asíntota A</td><td>Altura o volumen de un rodal vs. edad</td></tr>
   </table>
+  <h2>Cada familia, explicada</h2>
+  <div class="grid2">
+    <article><h3>Lineal: y = mx + b</h3>
+      <p><b>m</b> (pendiente) es cuánto cambia y por cada unidad de x: <span class="m">m = (y<sub>2</sub> − y<sub>1</sub>) / (x<sub>2</sub> − x<sub>1</sub>)</span>. <b>b</b> es el valor de y cuando x = 0.</p>
+      <p><i>Ejemplo:</i> una plántula mide 10 cm en la semana 2 y 18 cm en la semana 6. Entonces <span class="m">m = (18 − 10)/(6 − 2) = 2 cm/semana</span> y <span class="m">b = 10 − 2·2 = 6 cm</span>, así que <span class="m">y = 2x + 6</span>.</p></article>
+    <article><h3>Cuadrática: y = ax² + bx + c</h3>
+      <p>Si <b>a &lt; 0</b> la parábola abre hacia abajo y tiene un <b>máximo</b> en <span class="m">x = −b/(2a)</span>.</p>
+      <p><i>Ejemplo:</i> con <span class="m">y = −0.01x² + 0.6x + 3</span>, la dosis óptima es <span class="m">x = −0.6/(2·(−0.01)) = 30</span> y el rendimiento máximo es <span class="m">y(30) = −9 + 18 + 3 = 12</span>.</p></article>
+    <article><h3>Potencia: y = a·x<sup>b</sup></h3>
+      <p>Si x se duplica, y se multiplica por <span class="m">2<sup>b</sup></span>. Es típica de la <b>alometría</b> (relaciones entre partes de un organismo).</p>
+      <p><i>Ejemplo:</i> con b = 2.5, un árbol con el doble de diámetro tiene <span class="m">2<sup>2.5</sup> ≈ 5.7</span> veces más biomasa.</p></article>
+    <article><h3>Exponencial: y = y<sub>0</sub>·e<sup>rt</sup></h3>
+      <p><b>y<sub>0</sub></b> es el valor inicial y <b>r</b> la tasa relativa. En cada unidad de tiempo, y se multiplica por el factor <span class="m">e<sup>r</sup></span>. Si r &gt; 0 crece y si r &lt; 0 decrece. El tiempo de duplicación es <span class="m">ln 2 / r</span>.</p>
+      <p><i>Ejemplo:</i> con r = 0.1/día el factor diario es <span class="m">e<sup>0.1</sup> = 1.105</span> (+10.5 % por día) y la población se duplica en <span class="m">0.693/0.1 ≈ 6.9 días</span>.</p></article>
+    <article><h3>Logística: y = K / (1 + B·e<sup>−rt</sup>)</h3>
+      <p><b>K</b> es el techo (capacidad de carga, 100 % de incidencia). Al inicio se comporta casi como una exponencial; a la mitad (<span class="m">y = K/2</span>) crece lo más rápido; al final se aplana cerca de K. <b>B</b> se calcula con el valor inicial: <span class="m">B = (K − y<sub>0</sub>)/y<sub>0</sub></span>.</p></article>
+    <article><h3>Chapman-Richards: y = A(1 − e<sup>−kt</sup>)<sup>c</sup></h3>
+      <p><b>A</b> es la asíntota (el máximo al que tiende), <b>k</b> la rapidez con que se acerca a A y <b>c</b> la forma: con c &gt; 1 el inicio es lento y la curva toma forma de «S». Se usa para la altura y el volumen de rodales.</p></article>
+  </div>
+  <div class="worked"><h3>Repaso exprés: e y ln con la calculadora</h3>
+    <ul>
+      <li><span class="m">e ≈ 2.718</span>. La tecla <span class="calc">e<sup>x</sup></span> (o <span class="calc">exp</span>) calcula potencias de e, y la tecla <span class="calc">ln</span> es su inversa.</li>
+      <li><span class="m">ln(e<sup>a</sup>) = a</span> y <span class="m">e<sup>ln b</sup> = b</span>. Por eso, para «sacar» la r de un exponente se aplica ln.</li>
+      <li><span class="m">ln(a/b) = ln a − ln b</span>. El ln solo existe para números positivos.</li>
+      <li>Para <span class="m">e<sup>−2.4</sup></span> teclea <span class="calc">e<sup>x</sup></span> <span class="calc">(−2.4)</span> = 0.0907. Usa paréntesis y la tecla de negativo <span class="calc">(−)</span>, no la de resta.</li>
+      <li>En el celular, gira la calculadora a horizontal para ver <span class="calc">ln</span> y <span class="calc">e<sup>x</sup></span>.</li>
+    </ul>
+  </div>
   <h2>Explorador de funciones</h2>
   <p>Elige una familia y mueve los deslizadores. Observa qué controla cada parámetro: ¿desplaza, inclina, cambia la curvatura o fija un límite?</p>
   <div class="plotbox">
@@ -235,6 +304,8 @@ canvas.plot{width:100%;height:360px;display:block}
     <tr><td>Tabla A: altura de maíz (cm)</td><td class="num">50</td><td class="num">65</td><td class="num">80</td><td class="num">95</td></tr>
     <tr><td>Tabla B: pulgones por planta</td><td class="num">50</td><td class="num">75</td><td class="num">112.5</td><td class="num">168.75</td></tr>
   </table>
+  <div class="worked"><h3>Ejemplo resuelto: ¿lineal o exponencial?</h3>
+    <p>Datos: 10, 20, 40, 80. <b>Diferencias:</b> 10, 20, 40 (no son constantes, así que no es lineal). <b>Cocientes:</b> 20/10 = 2, 40/20 = 2, 80/40 = 2 (constantes, así que es exponencial con factor 2 y <span class="m">r = ln 2 = 0.693</span>). El siguiente valor sería 80 × 2 = 160.</p></div>
   <div class="ex" data-id="f7"></div>
   <div class="ex" data-id="f8"></div>
 </section>
@@ -254,6 +325,16 @@ canvas.plot{width:100%;height:360px;display:block}
     </ul></article>
     <article><h3>Cuidado al extrapolar</h3><p>Un modelo ajustado con datos de 0 a 8 meses o de 5 a 40 años es confiable dentro de ese rango. Fuera de él, la predicción puede ser absurda, como verás en el caso de la roya.</p></article>
   </div>
+  <div class="worked"><h3>Ejemplo: el ciclo aplicado a la roya (lo harás en el caso 1)</h3>
+    <ol>
+      <li><b>Problema:</b> ¿cuándo superará la roya el 10 % de hojas enfermas en el lote?</li>
+      <li><b>Supuestos y variables:</b> t = meses desde mayo; y = incidencia (%); no se aplica fungicida; el clima es típico de la temporada.</li>
+      <li><b>Familia:</b> los datos crecen multiplicándose y no pueden pasar de 100 %, así que se elige la logística.</li>
+      <li><b>Parámetros:</b> se estima r con los datos (linealización logit).</li>
+      <li><b>Validación:</b> se compara el modelo con datos que no se usaron para ajustar, por ejemplo septiembre.</li>
+      <li><b>Decisión:</b> se calcula el mes en que se alcanza el umbral y se planea el control antes.</li>
+    </ol>
+    <p>Si la validación falla, se regresa a los supuestos o se cambia de familia: por eso es un <b>ciclo</b>.</p></div>
   <div class="ex" data-id="f9"></div>
   <div class="ex" data-id="f10"></div>
 </section>
@@ -278,6 +359,19 @@ canvas.plot{width:100%;height:360px;display:block}
   <h2>Parte A · ¿Sirve el modelo exponencial?</h2>
   <p>Al inicio de una epidemia policíclica, cada lesión produce esporas que generan nuevas lesiones: la enfermedad crece en proporción a sí misma, <span class="m">y = y<sub>0</sub>e<sup>rt</sup></span>. Van der Plank llamó a <span class="m">r</span> la <b>tasa aparente de infección</b>. Con dos observaciones:</p>
   <div class="formula">r = ln(y<sub>2</sub> / y<sub>1</sub>) / (t<sub>2</sub> − t<sub>1</sub>)<small>tasa relativa por unidad de tiempo (aquí, por mes)</small></div>
+  <div class="worked"><h3>Antes de empezar: conceptos clave</h3>
+    <ul>
+      <li><b>Incidencia</b> = (hojas con al menos una lesión ÷ hojas revisadas) × 100. No mide cuánto daño tiene cada hoja (eso es la <i>severidad</i>), solo cuántas están enfermas.</li>
+      <li><b>Epidemia policíclica:</b> la roya completa varios ciclos de infección en una temporada, porque las esporas de las lesiones nuevas infectan más hojas. Por eso la enfermedad «se alimenta de sí misma» y crece de forma exponencial al principio.</li>
+    </ul></div>
+  <div class="worked"><h3>Ejemplo resuelto: tasa exponencial entre agosto y octubre</h3>
+    <ol>
+      <li>Datos: agosto (t = 3) y = 10.6 %; octubre (t = 5) y = 28.4 %.</li>
+      <li>Cociente: 28.4 / 10.6 = 2.679 (la incidencia casi se triplicó).</li>
+      <li>ln: <span class="calc">ln(2.679)</span> = 0.985.</li>
+      <li>Divide entre el tiempo transcurrido: 0.985 / (5 − 3) = <b>0.493 por mes</b>.</li>
+      <li>Interpretación: cada mes la incidencia se multiplicó por <span class="m">e<sup>0.493</sup> = 1.64</span>, es decir, creció 64 %.</li>
+    </ol></div>
   <div class="ex" data-id="r1"></div>
   <div class="ex" data-id="r2"></div>
   <div class="ex" data-id="r3"></div>
@@ -288,14 +382,37 @@ canvas.plot{width:100%;height:360px;display:block}
   <div class="formula">y(t) = 100 / (1 + B·e<sup>−rt</sup>),  con  B = (100 − y<sub>0</sub>) / y<sub>0</sub><small>y en %, t en meses desde mayo (t = 0)</small></div>
   <p><b>Truco del modelador:</b> la transformación <b>logit</b> convierte la curva en «S» en una recta, cuya pendiente es <span class="m">r</span>:</p>
   <div class="formula">L(t) = ln( y / (100 − y) ) = ln(y<sub>0</sub>/(100 − y<sub>0</sub>)) + r·t<small>Recta: ordenada al origen ln(1/B), pendiente r</small></div>
+  <div class="worked"><h3>Ejemplo resuelto: logit de septiembre (y = 18.8 %)</h3>
+    <ol>
+      <li>Hojas sanas: 100 − 18.8 = 81.2.</li>
+      <li>Razón enfermas/sanas: 18.8 / 81.2 = 0.2315.</li>
+      <li>ln: <span class="calc">ln(0.2315)</span> = <b>−1.463</b>.</li>
+    </ol>
+    <p>Cómo leer el logit: es negativo si y &lt; 50 %, vale 0 cuando y = 50 % y es positivo si y &gt; 50 %. Al graficarlo contra el tiempo, los puntos forman una recta cuya pendiente es r.</p></div>
   <div class="ex" data-id="r5"></div>
   <div class="ex" data-id="r6"></div>
   <div class="plotbox"><canvas class="plot" id="cvLogit" style="height:300px"></canvas><div class="unit" id="logitNote">Completa los dos logit para ver la recta.</div></div>
   <div class="ex" data-id="r7"></div>
   <div class="callout">A partir de aquí usa el modelo redondeado <span class="m">y(t) = 100 / (1 + 49·e<sup>−0.6t</sup>)</span>, es decir, <span class="m">y<sub>0</sub> = 2 %</span>, <span class="m">B = 49</span>, <span class="m">r = 0.6</span> /mes.</div>
+  <div class="worked"><h3>Ejemplo resuelto: evaluar la logística en octubre (t = 5)</h3>
+    <ol>
+      <li>Exponente: −0.6 × 5 = −3.</li>
+      <li><span class="calc">e<sup>x</sup>(−3)</span> = 0.0498.</li>
+      <li>Por B: 49 × 0.0498 = 2.44.</li>
+      <li>Suma 1: 1 + 2.44 = 3.44.</li>
+      <li>Divide: 100 / 3.44 = <b>29.1 %</b>. El dato observado fue 28.4 %, así que el modelo es bastante bueno.</li>
+    </ol></div>
   <div class="ex" data-id="r8"></div>
   <p>Para despejar el tiempo en que se alcanza un umbral <span class="m">u</span> (%):</p>
   <div class="formula">t<sub>u</sub> = ln( B·u / (100 − u) ) / r<small>se obtiene de 100/(1 + B e<sup>−rt</sup>) = u, aislando la exponencial y aplicando ln</small></div>
+  <div class="worked"><h3>¿De dónde sale la fórmula del umbral? (paso a paso)</h3>
+    <ol>
+      <li>Iguala el modelo al umbral: <span class="m">100/(1 + B e<sup>−rt</sup>) = u</span>.</li>
+      <li>Despeja el denominador: <span class="m">1 + B e<sup>−rt</sup> = 100/u</span>, luego <span class="m">B e<sup>−rt</sup> = (100 − u)/u</span>.</li>
+      <li>Aísla la exponencial: <span class="m">e<sup>−rt</sup> = (100 − u)/(B u)</span>.</li>
+      <li>Aplica ln: <span class="m">−rt = ln((100 − u)/(B u))</span>, de donde <span class="m">t = ln(B u/(100 − u)) / r</span>.</li>
+    </ol>
+    <p><i>Ejemplo con u = 50 %:</i> B·u/(100 − u) = 49 × 50/50 = 49; ln 49 = 3.892; 3.892/0.6 = <b>6.49 meses</b>, a mediados de noviembre. Ahí está el punto de inflexión: la epidemia crece lo más rápido.</p></div>
   <div class="ex" data-id="r9"></div>
 
   <h2>Parte C · Simulador de estrategias de manejo</h2>
@@ -309,6 +426,7 @@ canvas.plot{width:100%;height:360px;display:block}
     </div>
     <div class="readout" id="simOut"></div>
   </div>
+  <div class="callout info"><b>Cómo usar el simulador:</b> deja el umbral en 10 %. Mueve <b>y<sub>0</sub></b> para representar menos inóculo y <b>r</b> para representar resistencia o mejor manejo. Lee en los recuadros el mes en que se cruza el umbral, cuántos meses se ganan y la incidencia en enero. La curva gris es siempre la epidemia sin cambios.</div>
   <div class="ex" data-id="r10"></div>
   <div class="ex" data-id="r11"></div>
   <div class="ex" data-id="r12"></div>
@@ -339,6 +457,15 @@ canvas.plot{width:100%;height:360px;display:block}
     </div>
     <div class="readout"><span>RMSE: <b id="rmseOut">–</b> m</span><span>H(20) con tu ajuste: <b id="h20Out">–</b> m</span></div>
   </div>
+  <div class="worked"><h3>¿Qué es el RMSE y cómo ajustar la curva?</h3>
+    <p>Para cada edad, el <b>residuo</b> es la altura observada menos la altura del modelo. El RMSE eleva los residuos al cuadrado, los promedia y saca raíz:
+    <span class="m">RMSE = √[ Σ(observado − modelo)² / n ]</span>. Se mide en metros: un RMSE de 0.5 m significa que el modelo falla, en promedio, por medio metro.</p>
+    <ol>
+      <li>Empieza con <b>A</b> un poco arriba del último dato (≈ 32–36 m), porque a los 40 años el árbol todavía crece.</li>
+      <li>Mueve <b>k</b> hasta que la curva pase por los puntos intermedios (15 a 25 años).</li>
+      <li>Ajusta <b>c</b>: si la curva queda por encima de los primeros puntos (5 y 10 años), súbelo; si queda por debajo, bájalo.</li>
+      <li>Haz ajustes pequeños, uno a la vez, y quédate con el cambio que baje el RMSE. Cuando sea ≤ 0.80 m, registra tu ajuste.</li>
+    </ol></div>
   <div class="ex" data-id="b1"></div>
   <div class="callout">El modelo de referencia ajustado por mínimos cuadrados es <span class="m">H(t) = 34(1 − e<sup>−0.06t</sup>)<sup>1.6</sup></span>. Úsalo en las siguientes preguntas.</div>
   <div class="ex" data-id="b2"></div>
@@ -352,6 +479,15 @@ canvas.plot{width:100%;height:360px;display:block}
   </div>
   <p>El <b>turno técnico</b> (o de máxima producción) es la edad en que el IMA es máximo; ahí las curvas de ICA e IMA se cruzan. Cortar antes o después reduce la producción media anual de madera.</p>
   <table id="tabVol"></table>
+  <div class="worked"><h3>Ejemplo resuelto: volumen, IMA e ICA a los 20 años</h3>
+    <ol>
+      <li>Exponente: −0.07 × 20 = −1.4; <span class="calc">e<sup>x</sup>(−1.4)</span> = 0.2466.</li>
+      <li>1 − 0.2466 = 0.7534; al cubo: 0.7534³ = 0.4277.</li>
+      <li>V(20) = 900 × 0.4277 = <b>384.9 m³/ha</b>.</li>
+      <li>IMA(20) = 384.9 / 20 = <b>19.25 m³/ha/año</b>.</li>
+      <li>ICA de 15 a 20 = (V(20) − V(15)) / 5 = (384.9 − 247.2)/5 = <b>27.5 m³/ha/año</b>.</li>
+    </ol>
+    <p><b>¿Por qué importa comparar ICA con IMA?</b> Es como tu promedio escolar: si tu nueva calificación (ICA) es mayor que tu promedio (IMA), el promedio sube; si es menor, baja. Mientras ICA &gt; IMA conviene esperar. Cuando el ICA cae por debajo del IMA, el IMA ya llegó a su máximo: ese es el turno técnico.</p></div>
   <div class="ex" data-id="b4"></div>
   <div class="ex" data-id="b5"></div>
   <div class="ex" data-id="b6"></div>
@@ -374,6 +510,16 @@ canvas.plot{width:100%;height:360px;display:block}
     <article><h3>Familias</h3><p>Lineal suma, exponencial multiplica, logística y Chapman-Richards se saturan.</p></article>
     <article><h3>Modelar</h3><p>Datos → familia → parámetros → validar → decidir. Cuidado al extrapolar.</p></article>
   </div>
+  <div class="worked"><h3>Formulario de la clase</h3>
+    <table>
+      <tr><td>Pendiente</td><td class="m">m = (y<sub>2</sub> − y<sub>1</sub>)/(x<sub>2</sub> − x<sub>1</sub>)</td></tr>
+      <tr><td>Tasa exponencial con dos datos</td><td class="m">r = ln(y<sub>2</sub>/y<sub>1</sub>)/(t<sub>2</sub> − t<sub>1</sub>)</td></tr>
+      <tr><td>Logística (K = 100)</td><td class="m">y = 100/(1 + B e<sup>−rt</sup>),  B = (100 − y<sub>0</sub>)/y<sub>0</sub></td></tr>
+      <tr><td>Logit</td><td class="m">L = ln(y/(100 − y))</td></tr>
+      <tr><td>Tiempo al umbral u</td><td class="m">t = ln(B u/(100 − u))/r</td></tr>
+      <tr><td>Chapman-Richards</td><td class="m">y = A(1 − e<sup>−kt</sup>)<sup>c</sup></td></tr>
+      <tr><td>IMA / ICA</td><td class="m">IMA = V/t;  ICA = ΔV/Δt</td></tr>
+    </table></div>
   <div class="ex" data-id="q1"></div>
   <div class="ex" data-id="q2"></div>
   <div class="ex" data-id="q3"></div>
@@ -540,6 +686,8 @@ const EX = {
  q5:{sec:6,tipo:'mc',pts:0.5,enun:'Extrapolar un modelo fuera del rango de los datos…',opts:['siempre es correcto si el ajuste fue bueno','puede dar resultados irreales; hay que justificarlo con el conocimiento del fenómeno','está prohibido','sólo falla en funciones lineales'],ans:1,exp:'Lo viste con la roya: el modelo exponencial predijo 223 %.'},
  q6:{sec:6,tipo:'text',pts:1,min:30,enun:'Reflexión (mínimo 30 palabras): ¿qué aprendiste hoy y en qué otro problema agronómico, pecuario, ambiental o forestal usarías una función para decidir?'}
 };
+const GUIA = {"f1": "<ol><li>Lee cada opción y pregúntate: «si conozco la entrada, ¿hay una sola salida?».</li><li>Ejemplo: «número de lote → fecha de siembra» sí es función si cada lote se sembró un solo día.</li><li>Busca la opción en la que la entrada agrupa a muchos individuos distintos, cada uno con su propio valor.</li></ol>", "f2": "<ol><li>Distingue el dominio matemático (todo t que la fórmula acepta) del dominio práctico (donde hay datos).</li><li>Ejemplo: un modelo de rendimiento ajustado con dosis de 0 a 200 kg N/ha solo debe usarse entre 0 y 200.</li><li>Relee en el enunciado entre qué edades se midió el rodal.</li></ol>", "f3": "<ol><li>Sustituye t = 10: h(10) = 4 + 1.5 × 10.</li><li>Primero multiplica y luego suma.</li><li>Ejemplo: h(6) = 4 + 1.5 × 6 = 4 + 9 = 13 cm.</li></ol>", "f4": "<ol><li>Ahora conoces la salida (30 cm) y buscas la entrada: plantea 4 + 1.5t = 30.</li><li>Resta 4 en ambos lados y luego divide entre 1.5.</li><li>Ejemplo: ¿cuándo mide 16 cm? 1.5t = 12, así que t = 8 semanas.</li><li>Comprueba sustituyendo tu resultado en h(t).</li></ol>", "f5": "<ol><li>El número que multiplica a t es la pendiente: indica cuánto cambia h cuando t aumenta en 1.</li><li>Calcula h(1) − h(0) y fíjate qué obtienes.</li><li>Sus unidades son cm (de h) por semana (de t).</li></ol>", "f6": "<ul><li>¿Aumenta sumando siempre lo mismo? → lineal.</li><li>¿Sube, llega a un máximo y baja? → cuadrática.</li><li>¿La fórmula es a·D<sup>b</sup>? → potencia.</li><li>¿Se multiplica sin límite? → exponencial.</li><li>¿Se frena cerca de un techo? → logística.</li></ul>", "f7": "<ol><li>Tabla A: calcula 65 − 50, 80 − 65 y 95 − 80.</li><li>Tabla B: calcula 75/50, 112.5/75 y 168.75/112.5.</li><li>Diferencias iguales → lineal; cocientes iguales → exponencial (revisa el ejemplo resuelto de arriba).</li></ol>", "f8": "<ol><li>En una exponencial cada semana se multiplica por el mismo factor: el cociente que calculaste en el ejercicio anterior.</li><li>Valor siguiente = último valor × factor.</li><li>Ejemplo con 10, 20, 40, 80: el siguiente es 80 × 2 = 160.</li></ol>", "f9": "<ol><li>Piensa cómo trabajarías en campo: primero, ¿qué quiero saber? Luego, ¿qué supongo y qué mido?</li><li>Después eliges la forma de la curva, calculas sus números y compruebas que funcione.</li><li>Al final interpretas y decides. Revisa el ejemplo de la roya de arriba.</li><li>Usa cada «Paso» una sola vez.</li></ol>", "f10": "<ol><li>Recuerda la idea de «simplificación útil».</li><li>Desconfía de las opciones con palabras absolutas como «exactamente», «cualquier» o «siempre».</li><li>Piensa qué pasa si un modelo se usa lejos de sus datos.</li></ol>", "r1": "<ol><li>En la tabla, localiza la columna con t = 3 (Ago).</li><li>Lee el valor en la fila «Incidencia y (%)».</li></ol>", "r2": "<ol><li>Identifica: y<sub>1</sub> = 2.0 en t<sub>1</sub> = 0, y<sub>2</sub> = 6.5 en t<sub>2</sub> = 2.</li><li>Calcula el cociente 6.5 / 2.0.</li><li>Aplica <span class=\"calc\">ln</span> a ese cociente.</li><li>Divide entre (2 − 0). Revisa el ejemplo resuelto de agosto a octubre.</li></ol>", "r3": "<ol><li>Multiplica tu r por 8.</li><li>Calcula e elevado a ese número (<span class=\"calc\">e<sup>x</sup></span>).</li><li>Multiplica por 2 (la incidencia inicial).</li><li>Ejemplo con r = 0.3: 2·e<sup>2.4</sup> = 2 × 11.02 = 22.0. Usa tu r con tres decimales.</li></ol>", "r4": "<ol><li>Compara tu resultado del ejercicio anterior con el valor máximo que puede tener un porcentaje de hojas enfermas.</li><li>¿Qué le pasa a la epidemia cuando casi no quedan hojas sanas?</li></ol>", "r5": "<ol><li>Hojas sanas: 100 − 6.5.</li><li>Divide 6.5 entre ese resultado.</li><li>Aplica <span class=\"calc\">ln</span>. Como y &lt; 50 %, el resultado debe salir negativo (compara con el ejemplo de septiembre).</li></ol>", "r6": "<ol><li>Hojas sanas: 100 − 43.5.</li><li>Divide 43.5 entre ese resultado.</li><li>Aplica <span class=\"calc\">ln</span>. Como y está cerca de 50 %, el logit sale cercano a 0 y negativo.</li></ol>", "r7": "<ol><li>Pendiente = (cambio en L) ÷ (cambio en t).</li><li>Cuida los signos: L(6) − L(2) = (−0.261) − (−2.666) = −0.261 + 2.666.</li><li>Divide entre 6 − 2 = 4.</li><li>Ejemplo con julio (t = 2, L = −2.666) y septiembre (t = 4, L = −1.463): (−1.463 + 2.666)/2 = 0.60.</li></ol>", "r8": "<ol><li>Exponente: −0.6 × 4.</li><li>Aplica <span class=\"calc\">e<sup>x</sup></span> al resultado.</li><li>Multiplica por 49 y súmale 1.</li><li>Divide 100 entre ese número. Sigue el ejemplo resuelto de octubre.</li></ol>", "r9": "<ol><li>Calcula B·u/(100 − u) = 49 × 10 / 90.</li><li>Aplica <span class=\"calc\">ln</span>.</li><li>Divide entre r = 0.6.</li><li>El resultado está en meses desde mayo (t = 0): 1 = junio, 2 = julio, 3 = agosto.</li></ol>", "r10": "<ol><li>El numerador ln(49 × 10/90) es el mismo que en el ejercicio anterior; solo cambia r.</li><li>Divide ese ln entre 0.3.</li><li>También puedes comprobarlo en el simulador con y<sub>0</sub> = 2.0, r = 0.30 y u = 10: lee «Estrategia: t =».</li></ol>", "r11": "<ol><li>En el simulador, prueba (a): y<sub>0</sub> = 0.5, r = 0.60. Anota el tiempo al umbral, el tiempo ganado y la incidencia en enero.</li><li>Prueba (b): y<sub>0</sub> = 2.0, r = 0.30. Anota lo mismo.</li><li>Compara también qué tan empinada es la curva azul en cada caso.</li></ol>", "r12": "<ol><li><b>Situación:</b> en qué mes se supera el 10 % (usa tu resultado).</li><li><b>Acción:</b> qué recomiendas hacer y antes de qué mes.</li><li><b>Estrategia:</b> por qué conviene reducir r, y<sub>0</sub> o ambas (cita números del simulador).</li><li><b>Limitaciones:</b> datos de un solo lote, el clima puede cambiar la tasa, supuesto de K = 100 %, datos ilustrativos.</li></ol>", "b1": "<ol><li>Sigue los cuatro pasos del recuadro «¿Qué es el RMSE?».</li><li>Mira el valor del RMSE mientras mueves cada deslizador: si sube, regresa.</li><li>Puedes registrar varias veces hasta lograr RMSE ≤ 0.80 m.</li></ol>", "b2": "<ol><li>−0.06 × 20 = −1.2 y luego <span class=\"calc\">e<sup>x</sup>(−1.2)</span>.</li><li>Calcula 1 − ese resultado.</li><li>Elévalo a 1.6 (tecla <span class=\"calc\">x<sup>y</sup></span> o <span class=\"calc\">^</span>).</li><li>Multiplica por 34.</li><li>Ejemplo con t = 10: e<sup>−0.6</sup> = 0.5488; 1 − 0.5488 = 0.4512; 0.4512<sup>1.6</sup> = 0.280; × 34 = 9.52 m.</li></ol>", "b3": "<ol><li>Imagina un rodal de 200 años: ¿cuánto vale e<sup>−0.06·200</sup>? (casi 0).</li><li>Entonces, ¿a qué número se acerca H(t)?</li></ol>", "b4": "<ol><li>Mismo procedimiento que el ejemplo resuelto de V(20), pero con t = 30.</li><li>Exponente −0.07 × 30 = −2.1 y luego <span class=\"calc\">e<sup>x</sup></span>.</li><li>Calcula 1 − resultado, elévalo al cubo y multiplícalo por 900.</li></ol>", "b5": "<ol><li>IMA = volumen ÷ edad.</li><li>Divide tu V(30) entre 30. Ejemplo: IMA(20) = 384.9/20 = 19.25.</li></ol>", "b6": "<ol><li>Toma V(25) = 507.6 de la tabla y tu V(30).</li><li>Resta V(30) − V(25) y divide entre 5 años.</li><li>Ejemplo: ICA de 15 a 20 = (384.9 − 247.2)/5 = 27.5.</li></ol>", "b7": "<ol><li>Pasa el cursor (o el dedo) por la gráfica y busca la edad con el IMA más alto: la cima de la curva dorada.</li><li>Ahí la curva verde (ICA) cruza a la dorada.</li><li>En la tabla, el IMA casi no cambia entre 25 y 30 años: el máximo está entre ambas edades.</li></ol>", "b8": "<ol><li>Lee IMA(15) en la tabla y el IMA máximo (≈ 20.4).</li><li>Calcula la pérdida: 20.4 − IMA(15), y en porcentaje: pérdida ÷ 20.4 × 100.</li><li>Menciona otros factores: las trozas más gruesas valen más, el carbono que se sigue almacenando, el riesgo de incendios o plagas y la necesidad de dinero del productor.</li></ol>", "q1": "<p>Recuerda qué significa r: la rapidez relativa de crecimiento. Revisa el ejemplo del tiempo de duplicación en la sección 2.</p>", "q2": "<p>Revisa la explicación de la logística en la sección 2 y el ejemplo con u = 50 % del caso de la roya.</p>", "q3": "<p>Revisa la parte B del caso 1 (roya).</p>", "q4": "<p>Revisa la comparación entre ICA e IMA (el ejemplo del promedio escolar) en el caso 2.</p>", "q5": "<p>Recuerda qué predijo el modelo exponencial para enero en el caso de la roya.</p>", "q6": "<ol><li>Elige un fenómeno que te interese (riego, ganado, suelo, clima, plagas…).</li><li>¿Qué variable controlas o transcurre (x) y cuál responde (y)?</li><li>¿Qué familia usarías y por qué?</li><li>¿Qué decisión te ayudaría a tomar?</li></ol>"};
+Object.entries(GUIA).forEach(([k,v])=>{ if(EX[k]) EX[k].guia=v; });
 const SECS = ['Inicio','¿Qué es una función?','Familias de funciones','Ciclo de modelado','Caso 1: roya del cafeto','Caso 2: plantación de pino','Cierre y autoevaluación'];
 const totalPts = ()=> Object.values(EX).reduce((a,e)=>a+e.pts,0);
 const autoPts = ()=> Object.values(EX).filter(e=>e.tipo!=='text').reduce((a,e)=>a+e.pts,0);
@@ -552,7 +700,7 @@ const mathify = s=> esc(s).replace(/\^\{([^}]+)\}/g,'<sup>$1</sup>').replace(/\^
 let exNum = 0;
 function renderEx(box){
   const id=box.dataset.id, e=EX[id]; exNum++; e.n=exNum;
-  let h = `<div class="tag"><span>Ejercicio ${exNum}${e.tipo==='text'?' · respuesta abierta':''}</span></div><div class="enun">${mathify(e.enun)}</div>`;
+  let h = `<div class="tag"><span>Ejercicio ${exNum}${e.tipo==='text'?' · respuesta abierta':''}</span></div><div class="enun">${mathify(e.enun)}</div>${e.guia?`<details class="guia"><summary>💡 Cómo resolverlo paso a paso</summary>${e.guia}</details>`:''}`;
   if (e.tipo==='num') h += `<div class="row"><input type="text" inputmode="decimal" id="in_${id}" aria-label="Respuesta"> <span class="unit">${esc(e.unit||'')}</span><button data-check="${id}">Comprobar</button></div>`;
   if (e.tipo==='mc') h += `<div class="opts">${e.opts.map((o,i)=>`<label><input type="radio" name="in_${id}" value="${i}">${mathify(o)}</label>`).join('')}</div><button data-check="${id}">Comprobar</button>`;
   if (e.tipo==='match') h += `<div class="items">${e.items.map((it,i)=>`<div>${mathify(it)}</div><select id="in_${id}_${i}"><option value="">— elige —</option>${e.choices.map((c,j)=>`<option value="${j}">${esc(c)}</option>`).join('')}</select>`).join('')}</div><button data-check="${id}">Comprobar</button>`;
